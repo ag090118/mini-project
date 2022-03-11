@@ -113,13 +113,14 @@ function UserProfile() {
             value={value}
             onChange={handleChange}
             aria-label="styled tabs example"
+            centered
           >
             <StyledTab label="Personal Information" />
             <StyledTab label="Posts" />
             <StyledTab label="Requests" />
           </StyledTabs>
           <Divider/>
-          <div className="maal">
+          <div className="userprofile-info">
           {renderComponent()}
           </div>
         </Box>
