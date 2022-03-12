@@ -103,7 +103,7 @@ function UserProfile() {
       }
     }
   return (
-    <div >
+    <div>
       <div className="header">
         <Header />
       </div>

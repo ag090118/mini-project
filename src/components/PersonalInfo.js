@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
+=======
+import React from "react";
+>>>>>>> parent of 3ed7651 (changes in personal-info page)
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import {
@@ -7,12 +11,11 @@ import {
   ThemeProvider,
 } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
 
 let theme = createTheme();
 theme = responsiveFontSizes(theme);
 
+<<<<<<< HEAD
 const style1 = {
   position: "absolute",
   top: "50%",
@@ -87,14 +90,18 @@ function PersonalInfo() {
     "Shreyas",
     "Arpit",
   ]);
+=======
+function PersonalInfo() {
+>>>>>>> parent of 3ed7651 (changes in personal-info page)
   return (
-    <div className="user-profile-wrap">
+    <div>
       <ThemeProvider theme={theme}>
         <div class="container">
           <div className="personalinfo-editbtn">
             <Button variant="text">Text</Button>
           </div>
           <div class="cover-photo">
+<<<<<<< HEAD
             {/* <input type="file" onChange={onImageChange} className="filetype" /> */}
             <img
               src={
@@ -102,6 +109,10 @@ function PersonalInfo() {
                   ? image
                   : "https://images.unsplash.com/photo-1565464027194-7957a2295fb7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80"
               }
+=======
+            <img
+              src="https://images.unsplash.com/photo-1565464027194-7957a2295fb7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80"
+>>>>>>> parent of 3ed7651 (changes in personal-info page)
               class="profile"
             />
           </div>
@@ -110,7 +121,10 @@ function PersonalInfo() {
               variant="h4"
               sx={{
                 padding: "3%",
+<<<<<<< HEAD
                 fontSize: "80%",
+=======
+>>>>>>> parent of 3ed7651 (changes in personal-info page)
               }}
               align="right"
             >
@@ -120,7 +134,10 @@ function PersonalInfo() {
               variant="body2"
               sx={{
                 paddingRight: "3%",
+<<<<<<< HEAD
                 fontSize: "80%",
+=======
+>>>>>>> parent of 3ed7651 (changes in personal-info page)
               }}
               align="right"
             >
@@ -130,7 +147,10 @@ function PersonalInfo() {
               variant="body2"
               sx={{
                 paddingRight: "3%",
+<<<<<<< HEAD
                 fontSize: "80%",
+=======
+>>>>>>> parent of 3ed7651 (changes in personal-info page)
               }}
               align="right"
             >
@@ -146,6 +166,7 @@ function PersonalInfo() {
               marginRight: "auto",
             }}
           />
+<<<<<<< HEAD
           <br></br>
           <div className="pinfo-reach">
             <div onClick={handleOpen1} className="followers1">
@@ -233,6 +254,37 @@ function PersonalInfo() {
               </Box>
             </Modal>
           </div>
+=======
+          <div onClick={()=>{console.log("hi")}}className="followers">
+            <Typography
+              variant="h4"
+              sx={{
+                paddingRight: "3%",
+              }}
+              align="center"
+            >
+              1100
+            </Typography>
+            <Typography
+              variant="caption"
+              sx={{
+                paddingRight: "3%",
+              }}
+              align="center"
+            >
+              Followers
+            </Typography>
+          </div>
+          <Divider
+            style={{
+              margin: "8% 0 0 0",
+              background: "#9575cd",
+              width: "90%",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+          />
+>>>>>>> parent of 3ed7651 (changes in personal-info page)
         </div>
       </ThemeProvider>
     </div>
