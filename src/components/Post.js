@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import { isTemplateSpan } from "typescript";
 function Post(props) {
   const [commentsOpen, setCommentsOpen] = useState(false);
-  const { type , data } = props;
+  const { type  } = props;
   const [postinfo, setPostinfo] = useState({
     name: "Smitesh",
     dp: "",
@@ -21,7 +21,7 @@ function Post(props) {
   });
   //const [postinfo, setPostinfo] = useState([]);
   function handleCommentChange(e) {
-    console.log(data);
+    // console.log(data);
     setCommentsOpen((setCommentsOpen) => !setCommentsOpen);
   };
   // const getPosts = async () => {

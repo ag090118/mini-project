@@ -1,9 +1,12 @@
 import React from "react";
+import Post from "./Post";
 
 function PersonalPosts() {
   return (
     <div>
-      <h1>SECOND</h1>
+      <Post type={true}/>
+      <Post type={true}/>
+      <Post type={true}/>
     </div>
   );
 }

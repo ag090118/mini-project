@@ -35,7 +35,7 @@ function Main(props) {
           </Tabs>
         </Box>
       </div>
-      <TabPanel value={value} data={props.data} />
+      <TabPanel value={value}  />
     </div>
   );
 }

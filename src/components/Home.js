@@ -48,13 +48,7 @@ function Home() {
   const [cookies, setCookie] = useCookies();
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
-  const [postinfo, setPostinfo] = useState([{
-    author:"Happu",
-    time:"26/07/2001",
-    title:"HI",
-    comments:[],
-    description: ""
-  }]);
+
   const [chipData, setChipData] = React.useState([
     { key: 0, label: "Virus" },
     { key: 1, label: "Worms" },
@@ -129,7 +123,7 @@ function Home() {
   }
   useEffect(() => {
     checkRender();
-    getPosts();
+    // getPosts();
   }, []);
   const postSubmit = async (e) => {
     e.preventDefault();
@@ -330,7 +324,7 @@ function Home() {
       <h1>{cookies.username}</h1>
       <div className="center">
         <div className="main">
-          <Main data={postinfo}/>
+          <Main/>
         </div>
         <div className="side">
           <News />

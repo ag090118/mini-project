@@ -108,7 +108,7 @@ function UserProfile() {
         <Header />
       </div>
       <div className="userprofile-main">
-        <Box sx={{ width: "100%",height: "80vh", bgcolor: "#006064" }}>
+        <Box sx={{ width: "100%", bgcolor: "#006064" }}>
           <StyledTabs
             value={value}
             onChange={handleChange}

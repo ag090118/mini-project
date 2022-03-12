@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import {
@@ -14,30 +14,30 @@ let theme = createTheme();
 theme = responsiveFontSizes(theme);
 
 const style1 = {
-  position: 'absolute',
-  top: '50%',
-  left: '37.5%',
-  transform: 'translate(-50%, -50%)',
-  width: '10%',
-  height: '40%',
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
+  position: "absolute",
+  top: "50%",
+  left: "37.5%",
+  transform: "translate(-50%, -50%)",
+  width: "10%",
+  height: "40%",
+  bgcolor: "background.paper",
+  border: "2px solid #000",
   boxShadow: 24,
   p: 4,
-  overflow:'scroll',
+  overflow: "scroll",
 };
 const style2 = {
-  position: 'absolute',
-  top: '50%',
-  right: '29%',
-  transform: 'translate(-50%, -50%)',
-  width: '10%',
-  height: '40%',
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
+  position: "absolute",
+  top: "50%",
+  right: "29%",
+  transform: "translate(-50%, -50%)",
+  width: "10%",
+  height: "40%",
+  bgcolor: "background.paper",
+  border: "2px solid #000",
   boxShadow: 24,
   p: 4,
-  overflow:'scroll',
+  overflow: "scroll",
 };
 function PersonalInfo() {
   const [open1, setOpen1] = React.useState(false);
@@ -54,25 +54,54 @@ function PersonalInfo() {
   const handleClose2 = () => {
     setOpen2(false);
   };
-  const [image, setImage] = useState(null)
+  const [image, setImage] = useState(null);
 
-const onImageChange = (event) => {
- if (event.target.files && event.target.files[0]) {
-   setImage(URL.createObjectURL(event.target.files[0]));
- }
-}
+  const onImageChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      setImage(URL.createObjectURL(event.target.files[0]));
+    }
+  };
   const [data, setData] = React.useState([
-    "Smitesh","Aryan","Mehul","Ankit","Shreyas","Arpit","Smitesh","Aryan","Mehul","Ankit","Shreyas","Arpit","Smitesh","Aryan","Mehul","Ankit","Shreyas","Arpit","Smitesh","Aryan","Mehul","Ankit","Shreyas","Arpit"
+    "Smitesh",
+    "Aryan",
+    "Mehul",
+    "Ankit",
+    "Shreyas",
+    "Arpit",
+    "Smitesh",
+    "Aryan",
+    "Mehul",
+    "Ankit",
+    "Shreyas",
+    "Arpit",
+    "Smitesh",
+    "Aryan",
+    "Mehul",
+    "Ankit",
+    "Shreyas",
+    "Arpit",
+    "Smitesh",
+    "Aryan",
+    "Mehul",
+    "Ankit",
+    "Shreyas",
+    "Arpit",
   ]);
   return (
     <div className="user-profile-wrap">
       <ThemeProvider theme={theme}>
         <div class="container">
+          <div className="personalinfo-editbtn">
+            <Button variant="text">Text</Button>
+          </div>
           <div class="cover-photo">
-          
-          {/* <input type="file" onChange={onImageChange} className="filetype" /> */}
+            {/* <input type="file" onChange={onImageChange} className="filetype" /> */}
             <img
-              src={ (image) ? image : "https://images.unsplash.com/photo-1565464027194-7957a2295fb7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80"}
+              src={
+                image
+                  ? image
+                  : "https://images.unsplash.com/photo-1565464027194-7957a2295fb7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80"
+              }
               class="profile"
             />
           </div>
@@ -81,7 +110,7 @@ const onImageChange = (event) => {
               variant="h4"
               sx={{
                 padding: "3%",
-                fontSize: "80%"
+                fontSize: "80%",
               }}
               align="right"
             >
@@ -91,7 +120,7 @@ const onImageChange = (event) => {
               variant="body2"
               sx={{
                 paddingRight: "3%",
-                fontSize: "80%"
+                fontSize: "80%",
               }}
               align="right"
             >
@@ -101,7 +130,7 @@ const onImageChange = (event) => {
               variant="body2"
               sx={{
                 paddingRight: "3%",
-                fontSize: "80%"
+                fontSize: "80%",
               }}
               align="right"
             >
@@ -118,88 +147,91 @@ const onImageChange = (event) => {
             }}
           />
           <br></br>
-          <div className="pinfo-reach"> 
-          <div onClick={handleOpen1} className="followers1">
-            <Typography
-              variant="h4"
-              sx={{
-                paddingRight: "3%",
-                fontSize: "80%"
-              }}
-              align="center"
-            >
-              1100
-            </Typography>
-            <Typography
-              variant="caption"
-              sx={{
-                paddingRight: "3%",
-                fontSize: "80%"
-              }}
-              align="center"
-            >
-              Following
-            </Typography>
-          </div>
-          <Modal
-                open={open1}
-                onClose={handleClose1}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
+          <div className="pinfo-reach">
+            <div onClick={handleOpen1} className="followers1">
+              <Typography
+                variant="h4"
+                sx={{
+                  paddingRight: "3%",
+                  fontSize: "80%",
+                }}
+                align="center"
               >
-                <Box 
-                sx={style1}
-                id="scroll"
-                >
-                  {data.map((item)=>{
-         return <Typography id="modal-modal-title" variant="h6" component="h2">
-                    {item}
-                  </Typography>
-     })}
-                </Box>
-
-              </Modal>
-          <div onClick={handleOpen2} className="followers2">
-            <Typography
-              variant="h4"
-              sx={{
-                paddingRight: "3%",
-                fontSize: "80%"
-              }}
-              align="center"
-            >
-              1100
-            </Typography>
-            <Typography
-              variant="caption"
-              sx={{
-                paddingRight: "3%",
-                fontSize: "80%"
-              }}
-              align="center"
-            >
-              Followers
-            </Typography>
-          </div>
-          <Modal
-                open={open2}
-                onClose={handleClose2}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
+                1100
+              </Typography>
+              <Typography
+                variant="caption"
+                sx={{
+                  paddingRight: "3%",
+                  fontSize: "80%",
+                }}
+                align="center"
               >
-                <Box 
-                sx={style2}
-                id="scroll"
-                >
-                {data.map((item)=>{
-         return <Typography id="modal-modal-title" variant="h6" component="h2">
-                    {item}
-                  </Typography>
-     })}
-                </Box>
-
-              </Modal>
-          
+                Following
+              </Typography>
+            </div>
+            <Modal
+              open={open1}
+              onClose={handleClose1}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style1} id="scroll">
+                {data.map((item) => {
+                  return (
+                    <Typography
+                      id="modal-modal-title"
+                      variant="h6"
+                      component="h2"
+                    >
+                      {item}
+                    </Typography>
+                  );
+                })}
+              </Box>
+            </Modal>
+            <div onClick={handleOpen2} className="followers2">
+              <Typography
+                variant="h4"
+                sx={{
+                  paddingRight: "3%",
+                  fontSize: "80%",
+                }}
+                align="center"
+              >
+                1100
+              </Typography>
+              <Typography
+                variant="caption"
+                sx={{
+                  paddingRight: "3%",
+                  fontSize: "80%",
+                }}
+                align="center"
+              >
+                Followers
+              </Typography>
+            </div>
+            <Modal
+              open={open2}
+              onClose={handleClose2}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style2} id="scroll">
+                {data.map((item) => {
+                  return (
+                    <Typography
+                      id="modal-modal-title"
+                      variant="h6"
+                      component="h2"
+                    >
+                      {item}
+                    </Typography>
+                  );
+                })}
+              </Box>
+            </Modal>
           </div>
         </div>
       </ThemeProvider>
