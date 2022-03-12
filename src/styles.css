@@ -449,12 +449,14 @@ Header {
   display: flex;
   flex-direction: row;
 }
-/* .userprofile-info{
+.userprofile-info{
   width:100%;
   height:100%;
-  background-color: #140f57;
-} */
-
+}
+.user-profile-wrap{
+  width:100%;
+  height:90%;
+}
 
 body{
   font-family: Montserrat, sans-serif;
@@ -470,6 +472,7 @@ body{
   color: #b3b8cd;
   border-radius: 5px;
   width: 80%;
+  height: 90%;
   text-align: center;
   box-shadow: 0 10px 20px -10px rgba(0,0,0,.75);
 }
@@ -483,7 +486,7 @@ body{
   height: 30vh;
   width: 30vh;
   border-radius: 50%;
-  margin: 10% 0 0 -60%;
+  margin: 10% 0 0 -50%;
   border: 1px solid #1f1a32;
   padding: 1%;
   background: #292343;
@@ -491,18 +494,24 @@ body{
 .profile-name{
   margin: 5% 0 0 30%;
 }
-.followers{
+.pinfo-reach{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.followers1{
   cursor: pointer;
   width: fit-content;
-<<<<<<< HEAD
   width:50%;
+  
   align-items: center;
   justify-content: center;
 }
-.personalinfo-editbtn{
-  position: absolute;
+.followers2{
+  cursor: pointer;
   width: fit-content;
-  right: 50vh;
-=======
->>>>>>> parent of 3ed7651 (changes in personal-info page)
+  width:50%;
+  align-items: center;
+  justify-content: center;
 }

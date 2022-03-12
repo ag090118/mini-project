@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import { FaChevronUp } from "react-icons/fa";
 import { FaChevronDown } from "react-icons/fa";
 import { MdOutlineModeComment } from "react-icons/md";
@@ -7,10 +7,9 @@ import Comments from "./Comments";
 import Paper from "@mui/material/Paper";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
-import { isTemplateSpan } from "typescript";
 function Post(props) {
   const [commentsOpen, setCommentsOpen] = useState(false);
-  const { type  } = props;
+  const { type } = props;
   const [postinfo, setPostinfo] = useState({
     name: "Smitesh",
     dp: "",
@@ -19,21 +18,10 @@ function Post(props) {
     content:
       "An email virus consists of malicious code distributed in email messages to infect one or more devices. This malicious code can be activated in numerous ways: when the email recipient clicks on an infected link within the message, opens an infected attachment or interacts with the message in some other way."
   });
-  //const [postinfo, setPostinfo] = useState([]);
   function handleCommentChange(e) {
-    // console.log(data);
     setCommentsOpen((setCommentsOpen) => !setCommentsOpen);
-  };
-  // const getPosts = async () => {
-  //   const res = await fetch("https://dry-crag-93232.herokuapp.com/getposts", {
-  //     method: "GET",
-  //   });
-  //   const data = await res.json();
-  //   await setPostinfo(data);
-  //   console.log(postinfo[21]);
-  // }
+  }
   return (
-    
     <div className="post">
       <div className="post-side-bar">
         <div className="upvote-button">
@@ -60,7 +48,6 @@ function Post(props) {
         </div>
       </div>
       <Divider color="#000000" orientation="vertical" flexItem />
-      
       <div className="post-main">
         <Paper variant="elevation" elevation={2}>
           <div className="post-header">
@@ -73,26 +60,25 @@ function Post(props) {
           </div>
         </Paper>
         <div className="post-main-content">
-          {/* <Typography
+          <Typography
             sx={{
               padding: "3%"
             }}
             align="left"
             variant="body2"
-          > */}
+          >
             {postinfo.content}
-          {/* </Typography> */}
+          </Typography>
         </div>
 
         {commentsOpen ? (
           <div className="post-footer">
             <Divider color="#000000" flexItem />
-            <Comments postinfo={commentsOpen} />{" "}
+            <Comments postinfo={postinfo} />{" "}
           </div>
         ) : null}
       </div>
     </div>
-   
   );
 }
 

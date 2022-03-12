@@ -3,7 +3,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import TabPanel from "./TabPanel";
-function Main(props) {
+function Main() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -35,7 +35,7 @@ function Main(props) {
           </Tabs>
         </Box>
       </div>
-      <TabPanel value={value}  />
+      <TabPanel value={value} />
     </div>
   );
 }
