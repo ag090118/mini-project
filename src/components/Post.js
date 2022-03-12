@@ -7,20 +7,23 @@ import Comments from "./Comments";
 import Paper from "@mui/material/Paper";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
+import Skeleton from "@mui/material/Skeleton";
+import parse from "html-react-parser";
 function Post(props) {
   const [commentsOpen, setCommentsOpen] = useState(false);
-  const { type } = props;
+  const { type, data, isLoading } = props;
   const [postinfo, setPostinfo] = useState({
     name: "Smitesh",
     dp: "",
     date: "27/02/21",
     title: "Recent malware attacks from emails",
     content:
-      "An email virus consists of malicious code distributed in email messages to infect one or more devices. This malicious code can be activated in numerous ways: when the email recipient clicks on an infected link within the message, opens an infected attachment or interacts with the message in some other way."
+      "An email virus consists of malicious code distributed in email messages to infect one or more devices. This malicious code can be activated in numerous ways: when the email recipient clicks on an infected link within the message, opens an infected attachment or interacts with the message in some other way.",
   });
   function handleCommentChange(e) {
     setCommentsOpen((setCommentsOpen) => !setCommentsOpen);
   }
+
   return (
     <div className="post">
       <div className="post-side-bar">
@@ -52,23 +55,37 @@ function Post(props) {
         <Paper variant="elevation" elevation={2}>
           <div className="post-header">
             <p style={{ marginLeft: "2%" }}>{postinfo.name}</p>
-            <p style={{ marginRight: "2%" }}>{postinfo.date}</p>
+            {isLoading ? (
+              <Skeleton />
+            ) : (
+              <p style={{ marginRight: "2%" }}>{data.time}</p>
+            )}
           </div>
 
           <div className="post-title">
-            <h2 style={{ marginLeft: "2%" }}>{postinfo.title}</h2>
+            {isLoading ? (
+              <Skeleton />
+            ) : (
+              <h2 style={{ marginLeft: "2%" }}>{data.title}</h2>
+            )}
           </div>
         </Paper>
         <div className="post-main-content">
-          <Typography
-            sx={{
-              padding: "3%"
-            }}
-            align="left"
-            variant="body2"
-          >
-            {postinfo.content}
-          </Typography>
+          {isLoading ? (
+            <Skeleton />
+          ) : (
+            <Typography
+              component={"span"}
+              sx={{
+                padding: "3%",
+              }}
+              align="left"
+              variant="body2"
+            >
+              {/* {data.description} */}
+              <Data convertedText={data.description} />
+            </Typography>
+          )}
         </div>
 
         {commentsOpen ? (
@@ -80,6 +97,17 @@ function Post(props) {
       </div>
     </div>
   );
+}
+const options = {
+  replace: (domNode) => {
+    if (domNode.attribs && domNode.attribs.class === "remove") {
+      return <></>;
+    }
+  },
+};
+
+function Data(props) {
+  return parse(props.convertedText, options);
 }
 
 export default Post;
