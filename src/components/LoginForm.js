@@ -34,7 +34,7 @@ const LoginForm = () => {
   }
   const [user, setUser] = useState({
     userName: "",
-    userId: uuidv4(),
+    userId:"",
     pwd: "",
     userToken: "",
   });
@@ -79,10 +79,12 @@ const LoginForm = () => {
     });
     const data = await res.json();
     console.log(data);
+    console.log(data.result._id);
     if(res.status === 200 || res.status === 201){
         localStorage.setItem('Token', data.token)
         setCookie('username', userName, { path: '/' , expire: new Date(new Date().getTime()+ 258920000)});
-        setCookie('jwtoken', localStorage.getItem('Token'), { path: '/' , expire: new Date(new Date().getTime()+ 258920000)});       
+        setCookie('jwtoken', localStorage.getItem('Token'), { path: '/' , expire: new Date(new Date().getTime()+ 258920000)}); 
+        setCookie('userid', data.result._id, { path: '/' , expire: new Date(new Date().getTime()+ 258920000)});       
         //setCookie('useremail', userName, { path: '/' , expire: new Date(new Date().getTime()+ 258920000)});
         store.dispatch(loginFunc(user.userId, user.userName, localStorage.getItem('Token')));
         navigate("/");

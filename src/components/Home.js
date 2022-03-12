@@ -48,6 +48,13 @@ function Home() {
   const [cookies, setCookie] = useCookies();
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
+  const [postinfo, setPostinfo] = useState([{
+    author:"Happu",
+    time:"26/07/2001",
+    title:"HI",
+    comments:[],
+    description: ""
+  }]);
   const [chipData, setChipData] = React.useState([
     { key: 0, label: "Virus" },
     { key: 1, label: "Worms" },
@@ -105,7 +112,7 @@ function Home() {
   };
 
   const handleFilesChange = (files) => {
-    console.log(files);
+    //console.log(files);
     // Do something...
   };
   const checkRender = async () => {
@@ -113,10 +120,17 @@ function Home() {
       navigate("/login");
     }
   };
+  const getPosts = async () => {
+    await fetch("https://dry-crag-93232.herokuapp.com/getposts", {
+      method: "GET",
+    })
+      .then((resp) => resp.json())
+      .then((resp) => setPostinfo(resp));
+  }
   useEffect(() => {
     checkRender();
+    getPosts();
   }, []);
-
   const postSubmit = async (e) => {
     e.preventDefault();
     const res = await fetch("https://dry-crag-93232.herokuapp.com/createpost", {
@@ -316,7 +330,7 @@ function Home() {
       <h1>{cookies.username}</h1>
       <div className="center">
         <div className="main">
-          <Main />
+          <Main data={postinfo}/>
         </div>
         <div className="side">
           <News />
