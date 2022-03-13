@@ -69,7 +69,7 @@ export default function PrimarySearchAppBar(props) {
   const [isUserSignedIn, setIsUserSignedIn] = useState(false);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const [cookies, setCookie] = useCookies();
+  const [cookies, setCookie, removeCookie] = useCookies();
   // cookies.jwtoken
   // cookies.username
 
@@ -89,7 +89,11 @@ export default function PrimarySearchAppBar(props) {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
+  const handlelogout = async() => {
+    removeCookie('jwtoken');
+    removeCookie('userid');
+    removeCookie('username');
+  };
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -210,7 +214,6 @@ export default function PrimarySearchAppBar(props) {
               </Badge>
             </IconButton>
 
-            {user.userId !== null ? (
               <IconButton
                 size="large"
                 edge="end"
@@ -219,11 +222,17 @@ export default function PrimarySearchAppBar(props) {
                 aria-haspopup="true"
                 color="inherit"
               >
+              {!cookies.jwtoken && 
                 <Button component={Link} to={"/login"} size="large">
                   Log in/up
                 </Button>
+              }
+              {cookies.jwtoken && 
+                <Button component={Link} to={`/userprofile/${cookies.userid}`} size="large">
+                  {cookies.username}
+                </Button>
+              }
               </IconButton>
-            ) : (
               <IconButton
                 size="large"
                 edge="end"
@@ -232,11 +241,12 @@ export default function PrimarySearchAppBar(props) {
                 aria-haspopup="true"
                 color="inherit"
               >
-                <Button component={Link} to={"/login"} size="large">
-                  Log
-                </Button>
+              <Button component={Link} to={"/login"} size="large" onClick={handlelogout}>
+                  Logout
+              </Button>
               </IconButton>
-            )}
+              
+            
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton

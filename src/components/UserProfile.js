@@ -8,6 +8,9 @@ import Divider from '@mui/material/Divider';
 import PersonalInfo from "./PersonalInfo";
 import PersonalPosts from "./PersonalPosts";
 import PersonalRequests from "./PersonalRequests";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const AntTabs = styled(Tabs)({
   borderBottom: "1px solid #e8e8e8",
@@ -87,7 +90,16 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
 );
 
 function UserProfile() {
+  const navigate = useNavigate();
+  // getting id from the route ( this will be id of the profile we are viewing)
+  // our logged in user id will be cookies.userid
+  const { id } = useParams();
+  //console.log(id);
   const [value, setValue] = useState(0);
+  const [cookies, setCookie] = useCookies();
+  const [isLoading, setLoading] = useState(true);
+  const [userinfo,setUserinfo]=useState([
+  ]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -102,6 +114,26 @@ function UserProfile() {
         return <PersonalRequests/>;;
       }
     }
+  const checkRender = async () => {
+    if (!cookies.jwtoken) {
+      navigate("/login");
+    }
+  };
+  const fetchData = async () => {
+    // await fetch("https://dry-crag-93232.herokuapp.com/getuser", {
+    //   method: "GET",
+    // })
+    //   .then((resp) => resp.json())
+    //   .then((resp) => {
+    //     setUserinfo(resp);
+    //     setLoading(false);
+    //   });
+  };
+  useEffect(() => {
+    checkRender();
+    fetchData();
+  }, []);
+
   return (
     <div >
       <div className="header">

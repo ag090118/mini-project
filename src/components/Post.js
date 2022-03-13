@@ -9,6 +9,7 @@ import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import Skeleton from "@mui/material/Skeleton";
 import parse from "html-react-parser";
+import { Link } from "react-router-dom";
 function Post(props) {
   const [commentsOpen, setCommentsOpen] = useState(false);
   const { type, data, isLoading } = props;
@@ -54,7 +55,15 @@ function Post(props) {
       <div className="post-main">
         <Paper variant="elevation" elevation={2}>
           <div className="post-header">
-            <p style={{ marginLeft: "2%" }}>{postinfo.name}</p>
+          {isLoading ? (
+              <Skeleton />
+            ) : (
+             <Link 
+             to={`/userprofile/${data.authorid}`}
+             underline='none'
+             variant  = 'h1'
+             >{data.authorname}</Link>
+            )}
             {isLoading ? (
               <Skeleton />
             ) : (

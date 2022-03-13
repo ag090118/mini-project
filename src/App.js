@@ -35,7 +35,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signup" element={<SignupForm />} />
-          <Route path="/userprofile" element={<UserProfile />} />
+          <Route path="/userprofile/:id" element={<UserProfile />} />
         </Routes>
       </ThemeProvider>
     </Router>

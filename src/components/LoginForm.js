@@ -24,13 +24,13 @@ const LoginForm = () => {
         console.log(re.user);
         setCookie('username', re.user.displayName, { path: '/' , expire: new Date(new Date().getTime()+ 25892000000)});
         setCookie('jwtoken', re.user.accessToken, { path: '/' , expire: new Date(new Date().getTime()+ 25892000000)});
+        setCookie('userid', re.user.uid, { path: '/' , expire: new Date(new Date().getTime()+ 25892000000)});
         //setCookie('useremail', re.user.email, { path: '/' , expire: new Date(new Date().getTime()+ 25892000000)});
         navigate("/");
       })
       .catch((err) => {
         console.log(err);
       });
-      
   }
   const [user, setUser] = useState({
     userName: "",
@@ -83,7 +83,7 @@ const LoginForm = () => {
         localStorage.setItem('Token', data.token)
         setCookie('username', userName, { path: '/' , expire: new Date(new Date().getTime()+ 258920000)});
         setCookie('jwtoken', localStorage.getItem('Token'), { path: '/' , expire: new Date(new Date().getTime()+ 258920000)});       
-        //setCookie('useremail', userName, { path: '/' , expire: new Date(new Date().getTime()+ 258920000)});
+        setCookie('userid', data.result._id, { path: '/' , expire: new Date(new Date().getTime()+ 258920000)});
         store.dispatch(loginFunc(user.userId, user.userName, localStorage.getItem('Token')));
         navigate("/");
     }
