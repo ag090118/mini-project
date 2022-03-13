@@ -9,6 +9,7 @@ import {
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
+import Skeleton from "@mui/material/Skeleton";
 
 let theme = createTheme();
 theme = responsiveFontSizes(theme);
@@ -39,7 +40,10 @@ const style2 = {
   p: 4,
   overflow:'scroll',
 };
-function PersonalInfo() {
+function PersonalInfo(props) {
+  const {data,isLoading}=props;
+  // console.log(data);
+  // console.log(isLoading);
   const [open1, setOpen1] = React.useState(false);
   const handleOpen1 = () => {
     setOpen1(true);
@@ -61,7 +65,7 @@ const onImageChange = (event) => {
    setImage(URL.createObjectURL(event.target.files[0]));
  }
 }
-  const [data, setData] = React.useState([
+  const [followdata, setData] = React.useState([
     "Smitesh","Aryan","Mehul","Ankit","Shreyas","Arpit","Smitesh","Aryan","Mehul","Ankit","Shreyas","Arpit","Smitesh","Aryan","Mehul","Ankit","Shreyas","Arpit","Smitesh","Aryan","Mehul","Ankit","Shreyas","Arpit"
   ]);
   return (
@@ -77,6 +81,9 @@ const onImageChange = (event) => {
             />
           </div>
           <div class="profile-name">
+          {isLoading ? (
+              <Skeleton />
+            ) : (
             <Typography
               variant="h4"
               sx={{
@@ -85,8 +92,12 @@ const onImageChange = (event) => {
               }}
               align="right"
             >
-              Smitesh Hadape
+              {data.name}
             </Typography>
+            )}
+            {isLoading ? (
+              <Skeleton />
+            ) : (
             <Typography
               variant="body2"
               sx={{
@@ -95,8 +106,12 @@ const onImageChange = (event) => {
               }}
               align="right"
             >
-              ZEROCHAN
+              {data.username}
             </Typography>
+            )}
+            {isLoading ? (
+              <Skeleton />
+            ) : (
             <Typography
               variant="body2"
               sx={{
@@ -105,8 +120,9 @@ const onImageChange = (event) => {
               }}
               align="right"
             >
-              iit2019090@iiita.ac.in
+             {data.email}
             </Typography>
+            )}
           </div>
           <Divider
             style={{
@@ -120,6 +136,9 @@ const onImageChange = (event) => {
           <br></br>
           <div className="pinfo-reach"> 
           <div onClick={handleOpen1} className="followers1">
+          {isLoading ? (
+              <Skeleton />
+            ) : (
             <Typography
               variant="h4"
               sx={{
@@ -128,8 +147,9 @@ const onImageChange = (event) => {
               }}
               align="center"
             >
-              1100
+              {data.followers}
             </Typography>
+            )}
             <Typography
               variant="caption"
               sx={{
@@ -138,7 +158,7 @@ const onImageChange = (event) => {
               }}
               align="center"
             >
-              Following
+              FOLLOWERS
             </Typography>
           </div>
           <Modal
@@ -151,7 +171,7 @@ const onImageChange = (event) => {
                 sx={style1}
                 id="scroll"
                 >
-                  {data.map((item)=>{
+                  {followdata.map((item)=>{
          return <Typography id="modal-modal-title" variant="h6" component="h2">
                     {item}
                   </Typography>
@@ -160,6 +180,9 @@ const onImageChange = (event) => {
 
               </Modal>
           <div onClick={handleOpen2} className="followers2">
+          {isLoading ? (
+              <Skeleton />
+            ) : (
             <Typography
               variant="h4"
               sx={{
@@ -168,8 +191,9 @@ const onImageChange = (event) => {
               }}
               align="center"
             >
-              1100
+              {data.following}
             </Typography>
+            )}
             <Typography
               variant="caption"
               sx={{
@@ -178,7 +202,7 @@ const onImageChange = (event) => {
               }}
               align="center"
             >
-              Followers
+              FOLLOWING
             </Typography>
           </div>
           <Modal
@@ -191,7 +215,7 @@ const onImageChange = (event) => {
                 sx={style2}
                 id="scroll"
                 >
-                {data.map((item)=>{
+                {followdata.map((item)=>{
          return <Typography id="modal-modal-title" variant="h6" component="h2">
                     {item}
                   </Typography>

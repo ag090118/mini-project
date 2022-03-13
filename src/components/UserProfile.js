@@ -98,36 +98,38 @@ function UserProfile() {
   const [value, setValue] = useState(0);
   const [cookies, setCookie] = useCookies();
   const [isLoading, setLoading] = useState(true);
-  const [userinfo,setUserinfo]=useState([
-  ]);
+  const [userinfo,setUserinfo]=useState();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   const renderComponent = () => {
       if (value==0) {
-        return <PersonalInfo/>;
+        console.log(userinfo);
+        console.log(isLoading);
+        return <PersonalInfo data={userinfo} isLoading={isLoading}/>;
       } else if(value==1) {
         return <PersonalPosts/>;;
       }
       else{
         return <PersonalRequests/>;;
       }
-    }
+    };
   const checkRender = async () => {
     if (!cookies.jwtoken) {
       navigate("/login");
     }
   };
   const fetchData = async () => {
-    // await fetch("https://dry-crag-93232.herokuapp.com/getuser", {
-    //   method: "GET",
-    // })
-    //   .then((resp) => resp.json())
-    //   .then((resp) => {
-    //     setUserinfo(resp);
-    //     setLoading(false);
-    //   });
+    await fetch(`https://dry-crag-93232.herokuapp.com/${id}/getuser`, {
+      method: "GET",
+    })
+      .then((resp) => resp.json())
+      .then((resp) => {
+        setUserinfo(resp);
+        //console.log(userinfo)
+        setLoading(false);
+      });
   };
   useEffect(() => {
     checkRender();
