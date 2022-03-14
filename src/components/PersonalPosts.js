@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Post from "./Post";
 import Modal from "@mui/material/Modal";
 import { IoSend } from "react-icons/io5";
@@ -22,6 +22,8 @@ import Box from "@mui/material/Box";
 import { v4 as uuidv4 } from "uuid";
 import Paper from "@mui/material/Paper";
 import FileUpload from "react-mui-fileuploader";
+import Skeleton from "@mui/material/Skeleton";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -36,15 +38,51 @@ const style = {
   overflow: "auto",
 };
 
-function PersonalPosts() {
+function PersonalPosts(props) {
+  const {routeUserId} = props;
   const [postType, setPostType] = React.useState("Discussion");
   const [open, setOpen] = React.useState(false);
-  const [changedIn,setChangedId]=useState();
-  const handleOpen = (name) => {
+  const [changedId,setChangedId]=useState();
+  const [isLoading, setLoading] = useState(true);
+  const [allPosts,setAllPosts]=useState();
+  const handleOpen = async(id) => {
+
     console.log(id);
     setChangedId(id)
     setOpen(true);
+    
   }
+  const postSubmit = async () => {
+    const res = await fetch(`https://dry-crag-93232.herokuapp.com/${id}/updatepost`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization" : cookies.jwtoken
+      },
+      body: JSON.stringify({
+        title: title,
+        description: convertedText,
+        tags: chipDataPre,
+        postadmins: collaborators,
+      }),
+    });
+    const data = await res.json();
+    console.log(data);
+
+  };
+
+  const getPersonalPosts = async () => {
+    const res = await fetch(`https://dry-crag-93232.herokuapp.com/${routeUserId}/getuserposts`, {
+      method: "GET",
+    });
+    const allposts = await res.json();
+    console.log(allposts);
+    setAllPosts(allposts);
+    setLoading(false);
+  };
+  useEffect(() => {
+    getPersonalPosts();
+  }, []);
   const [cookies, setCookie] = useCookies();
   const navigate = useNavigate();
   const handleClose = () => setOpen(false);
@@ -143,42 +181,7 @@ function PersonalPosts() {
     time: "2022-03-14T05:59:59.859Z",
     __v: 0,
   });
-  const postSubmit = async (e) => {
-    e.preventDefault();
-    const res = await fetch("https://dry-crag-93232.herokuapp.com/createpost", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: cookies.jwtoken,
-      },
-      body: JSON.stringify({
-        title: title,
-        description: convertedText,
-        tags: chipDataPre,
-        postadmins: collaborators,
-      }),
-    });
-    const data = await res.json();
-    console.log(data);
-    // if (res.status === 200 || res.status === 201) {
-    //   localStorage.setItem("Token", data.token);
-    //   setCookie("username", userName, {
-    //     path: "/",
-    //     expire: new Date(new Date().getTime() + 258920000),
-    //   });
-    //   setCookie("jwtoken", localStorage.getItem("Token"), {
-    //     path: "/",
-    //     expire: new Date(new Date().getTime() + 258920000),
-    //   });
-    //   //setCookie('useremail', userName, { path: '/' , expire: new Date(new Date().getTime()+ 258920000)});
-    //   store.dispatch(
-    //     loginFunc(user.userId, user.userName, localStorage.getItem("Token"))
-    //   );
-    //   navigate("/");
-    // } else if (res.status === 400 || res.status === 404) {
-    //   alert("USER NOT REGISTERED");
-    // } else alert("FAILED");
-  };
+
   return (
     <div>
       <Modal
@@ -334,15 +337,21 @@ function PersonalPosts() {
           </div>
         </Box>
       </Modal>
-
+      {isLoading ? (
+              <Skeleton />
+            ) : (
+       allPosts.map((data) => {
+         {console.log(data)}
       <Post
         handleOpen={handleOpen}
-        key={dataChild._id}
+        key={data._id}
         type={true}
-        data={dataChild}
-        isLoading={false}
+        data={data}
+        isLoading={isLoading}
         isMenuButtons={true}
       />
+      })
+       )}
     </div>
   );
 }
