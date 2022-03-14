@@ -17,7 +17,7 @@ import { GoKebabVertical } from "react-icons/go";
 import { MdDelete } from "react-icons/md";
 function Post(props) {
   const [commentsOpen, setCommentsOpen] = useState(false);
-  const { type, data, isLoading, isMenuButtons, handleOpen } = props;
+  const { type, data, isLoading, isMenuButtons, handleOpen, handleDelete } = props;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -41,6 +41,10 @@ function Post(props) {
   function handleEdit() {
     handleClose();
     handleOpen(data._id);
+  }
+  function handleDeleteButton() {
+    handleClose();
+    handleDelete(data._id);
   }
   return (
     <div className="post">
@@ -120,7 +124,7 @@ function Post(props) {
                 }}
                 anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
               >
-                <MenuItem onClick={handleClose}> Delete</MenuItem>
+                <MenuItem onClick={handleDeleteButton}> Delete</MenuItem>
                 <MenuItem onClick={handleEdit}> Edit</MenuItem>
               </Menu>
             </div>

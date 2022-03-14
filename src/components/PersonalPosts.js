@@ -50,9 +50,24 @@ function PersonalPosts(props) {
     setChangedId(id);
     setOpen(true);
   };
+  const handleDeletePost = async (id) => {
+    console.log(id);
+    const res = await fetch(
+      `https://dry-crag-93232.herokuapp.com/${id}/deletepost`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: cookies.jwtoken,
+        },
+      }
+    );
+    const message= res.json();
+    console.log(message);
+    getPersonalPosts();
+  };
   const postSubmit = async () => {
     const res = await fetch(
-      `https://dry-crag-93232.herokuapp.com/${id}/updatepost`,
+      `https://dry-crag-93232.herokuapp.com/${changedId}/updatepost`,
       {
         method: "PATCH",
         headers: {
@@ -358,6 +373,7 @@ function PersonalPosts(props) {
         }) */
         allPosts.map((dataChild) => (
         <Post handleOpen={handleOpen}
+        handleDelete={handleDeletePost}
             key={dataChild._id}
             type={true}
             data={dataChild}
