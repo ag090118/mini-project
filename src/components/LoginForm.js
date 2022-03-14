@@ -17,16 +17,31 @@ import { useCookies } from 'react-cookie';
 const LoginForm = () => {
   const [cookies, setCookie] = useCookies({});
   const navigate= useNavigate();
-  function signInWithGoogle() {
+const registerGoogleUser = async (re) => {
+  console.log(re)
+      const res=await fetch("https://dry-crag-93232.herokuapp.com/gregister", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        user :re.user
+      })
+    });
+    const data = await res.json();
+        
+    setCookie('userid', data.result._id, { path: '/' , expire: new Date(new Date().getTime()+ 258920000)});
+    setCookie('username',data.result.username, { path: '/' , expire: new Date(new Date().getTime()+ 25892000000)});
+    setCookie('jwtoken', re.user.accessToken, { path: '/' , expire: new Date(new Date().getTime()+ 25892000000)});
+    console.log(data);
+    navigate("/");
+};
+function signInWithGoogle() {
     const provider = new GoogleAuthProvider();
     signInWithPopup(authentication, provider)
       .then((re) => {
-        console.log(re.user);
-        setCookie('username', re.user.displayName, { path: '/' , expire: new Date(new Date().getTime()+ 25892000000)});
-        setCookie('jwtoken', re.user.accessToken, { path: '/' , expire: new Date(new Date().getTime()+ 25892000000)});
-        setCookie('userid', re.user.uid, { path: '/' , expire: new Date(new Date().getTime()+ 25892000000)});
+        registerGoogleUser(re);
         //setCookie('useremail', re.user.email, { path: '/' , expire: new Date(new Date().getTime()+ 25892000000)});
-        navigate("/");
       })
       .catch((err) => {
         console.log(err);

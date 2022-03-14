@@ -84,6 +84,7 @@ function PersonalPosts(props) {
     );
     const data = await res.json();
     console.log(data);
+    getPersonalPosts();
   };
 
   const getPersonalPosts = async () => {
