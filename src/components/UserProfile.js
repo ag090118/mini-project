@@ -4,7 +4,7 @@ import { styled } from "@mui/material/styles";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import Divider from '@mui/material/Divider';
+import Divider from "@mui/material/Divider";
 import PersonalInfo from "./PersonalInfo";
 import PersonalPosts from "./PersonalPosts";
 import PersonalRequests from "./PersonalRequests";
@@ -98,23 +98,20 @@ function UserProfile() {
   const [value, setValue] = useState(0);
   const [cookies, setCookie] = useCookies();
   const [isLoading, setLoading] = useState(true);
-  const [userinfo,setUserinfo]=useState();
+  const [userinfo, setUserinfo] = useState();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   const renderComponent = () => {
-      if (value==0) {
-        console.log(userinfo);
-        console.log(isLoading);
-        return <PersonalInfo data={userinfo} isLoading={isLoading}/>;
-      } else if(value==1) {
-        return <PersonalPosts/>;;
-      }
-      else{
-        return <PersonalRequests/>;;
-      }
-    };
+    if (value == 0) {
+      return <PersonalInfo data={userinfo} isLoading={isLoading} />;
+    } else if (value == 1) {
+      return <PersonalPosts />;
+    } else {
+      return <PersonalRequests />;
+    }
+  };
   const checkRender = async () => {
     if (!cookies.jwtoken) {
       navigate("/login");
@@ -137,12 +134,12 @@ function UserProfile() {
   }, []);
 
   return (
-    <div >
+    <div>
       <div className="header">
         <Header />
       </div>
       <div className="userprofile-main">
-        <Box sx={{ width: "100%",height: "80vh", bgcolor: "#006064" }}>
+        <Box sx={{ width: "100%", bgcolor: "#006064" }}>
           <StyledTabs
             value={value}
             onChange={handleChange}
@@ -153,10 +150,8 @@ function UserProfile() {
             <StyledTab label="Posts" />
             <StyledTab label="Requests" />
           </StyledTabs>
-          <Divider/>
-          <div className="userprofile-info">
-          {renderComponent()}
-          </div>
+          <Divider />
+          <div id="scroll" className="userprofile-info">{renderComponent()}</div>
         </Box>
       </div>
     </div>

@@ -10,9 +10,23 @@ import Typography from "@mui/material/Typography";
 import Skeleton from "@mui/material/Skeleton";
 import parse from "html-react-parser";
 import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { GoKebabVertical } from "react-icons/go";
+import { MdDelete } from "react-icons/md";
 function Post(props) {
   const [commentsOpen, setCommentsOpen] = useState(false);
-  const { type, data, isLoading } = props;
+  const { type, data, isLoading, isMenuButtons, handleOpen } = props;
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const [postinfo, setPostinfo] = useState({
     name: "Smitesh",
     dp: "",
@@ -24,7 +38,10 @@ function Post(props) {
   function handleCommentChange(e) {
     setCommentsOpen((setCommentsOpen) => !setCommentsOpen);
   }
-
+  function handleEdit() {
+    handleClose();
+    handleOpen();
+  }
   return (
     <div className="post">
       <div className="post-side-bar">
@@ -53,22 +70,60 @@ function Post(props) {
       </div>
       <Divider color="#000000" orientation="vertical" flexItem />
       <div className="post-main">
-        <Paper variant="elevation" elevation={2}>
+        <Paper
+          sx={{
+            width: "100%",
+          }}
+          variant="elevation"
+          elevation={2}
+        >
           <div className="post-header">
-          {isLoading ? (
-              <Skeleton />
-            ) : (
-             <Link 
-             to={`/userprofile/${data.authorid}`}
-             underline='none'
-             variant  = 'h1'
-             >{data.authorname}</Link>
-            )}
             {isLoading ? (
               <Skeleton />
             ) : (
-              <p style={{ marginRight: "2%" }}>{data.time}</p>
+              <div className="post-title-main">
+                <Link
+                  style={{ textDecoration: "none", color: "white" }}
+                  to={`/userprofile/${data.authorid}`}
+                  underline="none"
+                  variant="h1"
+                >
+                  {data.authorname}
+                </Link>
+                <p style={{ marginRight: "2%" }}>{data.time}</p>
+              </div>
             )}
+            <div className="post-menuButton">
+              <Button
+                id="basic-button"
+                aria-controls={open ? "basic-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                onClick={handleClick}
+                disableRipple={true}
+                endIcon={<GoKebabVertical />}
+                style={{
+                  padding: "0",
+                  margin: "0",
+                  width: "fit-content",
+                  color: "white",
+                }}
+                variant="text"
+              ></Button>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+                anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
+              >
+                <MenuItem onClick={handleClose}> Delete</MenuItem>
+                <MenuItem onClick={handleEdit}> Edit</MenuItem>
+              </Menu>
+            </div>
           </div>
 
           <div className="post-title">
