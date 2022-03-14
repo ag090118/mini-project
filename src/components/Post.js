@@ -18,7 +18,6 @@ import { MdDelete } from "react-icons/md";
 function Post(props) {
   const [commentsOpen, setCommentsOpen] = useState(false);
   const { type, data, isLoading, isMenuButtons, handleOpen } = props;
-  console.log(data);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {

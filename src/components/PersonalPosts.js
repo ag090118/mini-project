@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Post from "./Post";
 import Modal from "@mui/material/Modal";
 import { IoSend } from "react-icons/io5";
@@ -39,42 +39,45 @@ const style = {
 };
 
 function PersonalPosts(props) {
-  const {routeUserId} = props;
+  const { routeUserId } = props;
   const [postType, setPostType] = React.useState("Discussion");
   const [open, setOpen] = React.useState(false);
-  const [changedId,setChangedId]=useState();
+  const [changedId, setChangedId] = useState();
   const [isLoading, setLoading] = useState(true);
-  const [allPosts,setAllPosts]=useState();
-  const handleOpen = async(id) => {
-
+  const [allPosts, setAllPosts] = useState();
+  const handleOpen = async (id) => {
     console.log(id);
-    setChangedId(id)
+    setChangedId(id);
     setOpen(true);
-    
-  }
+  };
   const postSubmit = async () => {
-    const res = await fetch(`https://dry-crag-93232.herokuapp.com/${id}/updatepost`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization" : cookies.jwtoken
-      },
-      body: JSON.stringify({
-        title: title,
-        description: convertedText,
-        tags: chipDataPre,
-        postadmins: collaborators,
-      }),
-    });
+    const res = await fetch(
+      `https://dry-crag-93232.herokuapp.com/${id}/updatepost`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: cookies.jwtoken,
+        },
+        body: JSON.stringify({
+          title: title,
+          description: convertedText,
+          tags: chipDataPre,
+          postadmins: collaborators,
+        }),
+      }
+    );
     const data = await res.json();
     console.log(data);
-
   };
 
   const getPersonalPosts = async () => {
-    const res = await fetch(`https://dry-crag-93232.herokuapp.com/${routeUserId}/getuserposts`, {
-      method: "GET",
-    });
+    const res = await fetch(
+      `https://dry-crag-93232.herokuapp.com/${routeUserId}/getuserposts`,
+      {
+        method: "GET",
+      }
+    );
     const allposts = await res.json();
     console.log(allposts);
     setAllPosts(allposts);
@@ -338,20 +341,30 @@ function PersonalPosts(props) {
         </Box>
       </Modal>
       {isLoading ? (
-              <Skeleton />
-            ) : (
-       allPosts.map((data) => {
-         {console.log(data)}
-      <Post
-        handleOpen={handleOpen}
-        key={data._id}
-        type={true}
-        data={data}
-        isLoading={isLoading}
-        isMenuButtons={true}
-      />
-      })
-       )}
+        <Skeleton />
+      ) : (
+        /* allPosts.map((data) => {
+          {
+            console.log(data);
+          }
+          <Post
+            handleOpen={handleOpen}
+            key={data._id}
+            type={true}
+            data={data}
+            isLoading={isLoading}
+            isMenuButtons={true}
+          />;
+        }) */
+        allPosts.map((dataChild) => (
+        <Post handleOpen={handleOpen}
+            key={dataChild._id}
+            type={true}
+            data={dataChild}
+            isLoading={isLoading}
+            isMenuButtons={true}/>
+      ))
+      )}
     </div>
   );
 }
