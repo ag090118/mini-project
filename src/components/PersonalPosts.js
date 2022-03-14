@@ -39,7 +39,12 @@ const style = {
 function PersonalPosts() {
   const [postType, setPostType] = React.useState("Discussion");
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const [changedIn,setChangedId]=useState();
+  const handleOpen = (name) => {
+    console.log(id);
+    setChangedId(id)
+    setOpen(true);
+  }
   const [cookies, setCookie] = useCookies();
   const navigate = useNavigate();
   const handleClose = () => setOpen(false);

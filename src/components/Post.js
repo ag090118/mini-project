@@ -40,7 +40,7 @@ function Post(props) {
   }
   function handleEdit() {
     handleClose();
-    handleOpen();
+    handleOpen(data._id);
   }
   return (
     <div className="post">
