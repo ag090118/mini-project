@@ -15,9 +15,20 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { GoKebabVertical } from "react-icons/go";
 import { MdDelete } from "react-icons/md";
+import {
+  createTheme,
+  responsiveFontSizes,
+  ThemeProvider,
+} from "@mui/material/styles";
+
+let theme = createTheme();
+theme = responsiveFontSizes(theme);
 function Post(props) {
+  const { type, data, isMenuButtons, handleOpen, handleDelete } = props;
   const [commentsOpen, setCommentsOpen] = useState(false);
-  const { type, data, isLoading, isMenuButtons, handleOpen, handleDelete } = props;
+  const [upvotes, setUpvotes] = useState(data.upvotes.length);
+  const [downvotes, setDownvotes] = useState(data.downvotes.length);
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -46,45 +57,68 @@ function Post(props) {
     handleClose();
     handleDelete(data._id);
   }
+  function handleUpvote() {
+    setUpvotes((prev) => prev + 1);
+  }
+  function handleDownvote() {
+    setDownvotes((prev) => prev + 1);
+  }
   return (
-    <div className="post">
-      <div className="post-side-bar">
-        <div className="upvote-button">
-          <div>
-            <FaChevronUp className="upvote-icon" />
+    <ThemeProvider theme={theme}>
+      <div className="post">
+        <div className="post-side-bar">
+          <div className="upvote-button">
+            <div onClick={handleUpvote}>
+              <FaChevronUp className="upvote-icon" />
+            </div>
+
+            <div className="upvote-wrapper">
+              <Typography variant="body1" align="center">
+                {upvotes}
+              </Typography>
+              <Divider
+                style={{
+                  marginBottom: "1%",
+                  background: "#000000",
+                  width: "70%",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                }}
+              />
+              <Typography variant="body1" align="center">
+                {downvotes}
+              </Typography>
+            </div>
+
+            <div onClick={handleDownvote}>
+              <FaChevronDown className="upvote-icon" />
+            </div>
           </div>
-          <div>
-            <FaChevronDown className="upvote-icon" />
+          <div className="comment-button">
+            <div>
+              <RiBookmarkLine
+                onClick={handleCommentChange}
+                className="comment-icon"
+              />
+            </div>
+            <div>
+              <MdOutlineModeComment
+                onClick={handleCommentChange}
+                className="comment-icon"
+              />
+            </div>
           </div>
         </div>
-        <div className="comment-button">
-          <div>
-            <RiBookmarkLine
-              onClick={handleCommentChange}
-              className="comment-icon"
-            />
-          </div>
-          <div>
-            <MdOutlineModeComment
-              onClick={handleCommentChange}
-              className="comment-icon"
-            />
-          </div>
-        </div>
-      </div>
-      <Divider color="#000000" orientation="vertical" flexItem />
-      <div className="post-main">
-        <Paper
-          sx={{
-            width: "100%",
-          }}
-          variant="elevation"
-          elevation={2}
-        >
-          <div className="post-header">
-            {isLoading ? (
-              <Skeleton />
-            ) : (
+        <Divider color="#000000" orientation="vertical" flexItem />
+        <div className="post-main">
+          <Paper
+            sx={{
+              width: "100%",
+            }}
+            variant="elevation"
+            elevation={2}
+          >
+            <div className="post-header">
               <div className="post-title-main">
                 <Link
                   style={{ textDecoration: "none", color: "white" }}
@@ -96,52 +130,45 @@ function Post(props) {
                 </Link>
                 <p style={{ marginRight: "2%" }}>{data.time}</p>
               </div>
-            )}
-            <div className="post-menuButton">
-              <Button
-                id="basic-button"
-                aria-controls={open ? "basic-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                onClick={handleClick}
-                disableRipple={true}
-                endIcon={<GoKebabVertical />}
-                style={{
-                  padding: "0",
-                  margin: "0",
-                  width: "fit-content",
-                  color: "white",
-                }}
-                variant="text"
-              ></Button>
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
-                  "aria-labelledby": "basic-button",
-                }}
-                anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
-              >
-                <MenuItem onClick={handleDeleteButton}> Delete</MenuItem>
-                <MenuItem onClick={handleEdit}> Edit</MenuItem>
-              </Menu>
-            </div>
-          </div>
 
-          <div className="post-title">
-            {isLoading ? (
-              <Skeleton />
-            ) : (
+              <div className="post-menuButton">
+                <Button
+                  id="basic-button"
+                  aria-controls={open ? "basic-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  onClick={handleClick}
+                  disableRipple={true}
+                  endIcon={<GoKebabVertical />}
+                  style={{
+                    padding: "0",
+                    margin: "0",
+                    width: "fit-content",
+                    color: "white",
+                  }}
+                  variant="text"
+                ></Button>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                  anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
+                >
+                  <MenuItem onClick={handleDeleteButton}> Delete</MenuItem>
+                  <MenuItem onClick={handleEdit}> Edit</MenuItem>
+                </Menu>
+              </div>
+            </div>
+
+            <div className="post-title">
               <h2 style={{ marginLeft: "2%" }}>{data.title}</h2>
-            )}
-          </div>
-        </Paper>
-        <div className="post-main-content">
-          {isLoading ? (
-            <Skeleton />
-          ) : (
+            </div>
+          </Paper>
+          <div className="post-main-content">
             <Typography
               component={"span"}
               sx={{
@@ -153,17 +180,17 @@ function Post(props) {
               {/* {data.description} */}
               <Data convertedText={data.description} />
             </Typography>
-          )}
-        </div>
-
-        {commentsOpen ? (
-          <div className="post-footer">
-            <Divider color="#000000" flexItem />
-            <Comments postinfo={postinfo} />{" "}
           </div>
-        ) : null}
+
+          {commentsOpen ? (
+            <div className="post-footer">
+              <Divider color="#000000" flexItem />
+              <Comments postinfo={postinfo} />{" "}
+            </div>
+          ) : null}
+        </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 }
 const options = {

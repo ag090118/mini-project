@@ -155,6 +155,10 @@ Header {
   display: flex;
   justify-content: space-evenly;
 }
+.upvote-wrapper{
+  display: flex;
+  flex-direction: column;
+}
 
 .comment-button div {
   display: flex;
