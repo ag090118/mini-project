@@ -22,7 +22,9 @@ import store from "./store";
 import { useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
 
-const LOGO = <img className="logo" src="../logo.png" alt="logo" />;
+
+const LOGO = <Link to="/">
+<img className="logo" src="../logo.png" alt="logo" /></Link>;
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
