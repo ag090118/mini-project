@@ -24,7 +24,7 @@ import {
 let theme = createTheme();
 theme = responsiveFontSizes(theme);
 function Post(props) {
-  const { type, data, isMenuButtons, handleOpen, handleDelete } = props;
+  const { profile, data, isMenuButtons, handleOpen, handleDelete } = props;
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [upvotes, setUpvotes] = useState(data.upvotes.length);
   const [downvotes, setDownvotes] = useState(data.downvotes.length);
@@ -131,37 +131,39 @@ function Post(props) {
                 <p style={{ marginRight: "2%" }}>{data.time}</p>
               </div>
 
-              <div className="post-menuButton">
-                <Button
-                  id="basic-button"
-                  aria-controls={open ? "basic-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
-                  onClick={handleClick}
-                  disableRipple={true}
-                  endIcon={<GoKebabVertical />}
-                  style={{
-                    padding: "0",
-                    margin: "0",
-                    width: "fit-content",
-                    color: "white",
-                  }}
-                  variant="text"
-                ></Button>
-                <Menu
-                  id="basic-menu"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
-                  MenuListProps={{
-                    "aria-labelledby": "basic-button",
-                  }}
-                  anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
-                >
-                  <MenuItem onClick={handleDeleteButton}> Delete</MenuItem>
-                  <MenuItem onClick={handleEdit}> Edit</MenuItem>
-                </Menu>
-              </div>
+              {profile ? (
+                <div className="post-menuButton">
+                  <Button
+                    id="basic-button"
+                    aria-controls={open ? "basic-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    onClick={handleClick}
+                    disableRipple={true}
+                    endIcon={<GoKebabVertical />}
+                    style={{
+                      padding: "0",
+                      margin: "0",
+                      width: "fit-content",
+                      color: "white",
+                    }}
+                    variant="text"
+                  ></Button>
+                  <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    MenuListProps={{
+                      "aria-labelledby": "basic-button",
+                    }}
+                    anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
+                  >
+                    <MenuItem onClick={handleDeleteButton}> Delete</MenuItem>
+                    <MenuItem onClick={handleEdit}> Edit</MenuItem>
+                  </Menu>
+                </div>
+              ) : null}
             </div>
 
             <div className="post-title">

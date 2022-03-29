@@ -376,7 +376,7 @@ function PersonalPosts(props) {
         <Post handleOpen={handleOpen}
         handleDelete={handleDeletePost}
             key={dataChild._id}
-            type={true}
+            profile={true}
             data={dataChild}
             isLoading={isLoading}
             isMenuButtons={true}/>
