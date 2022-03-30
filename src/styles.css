@@ -532,3 +532,7 @@ body{
   align-items: center;
   justify-content: center;
 }
+
+.upvote-icon{
+  background-color: #006064;
+}

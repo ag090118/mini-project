@@ -24,11 +24,12 @@ import {
 let theme = createTheme();
 theme = responsiveFontSizes(theme);
 function Post(props) {
-  const { profile, data, isMenuButtons, handleOpen, handleDelete } = props;
+  const { liked, profile, data, isMenuButtons, handleOpen, handleDelete } =
+    props;
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [upvotes, setUpvotes] = useState(data.upvotes.length);
   const [downvotes, setDownvotes] = useState(data.downvotes.length);
-
+  const [localLiked, setLocalLiked] = useState(liked);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -58,10 +59,35 @@ function Post(props) {
     handleDelete(data._id);
   }
   function handleUpvote() {
-    setUpvotes((prev) => prev + 1);
+    if (localLiked === 0) {
+      setLocalLiked(1);
+      setUpvotes((prev) => prev + 1);
+    }
+    else if(localLiked===1){
+      setLocalLiked(0);
+      setUpvotes((prev) => prev - 1);
+    }
+    else{
+      setLocalLiked(1);
+      setUpvotes((prev) => prev + 1);
+      setDownvotes((prev) => prev - 1);
+    }
+
   }
   function handleDownvote() {
-    setDownvotes((prev) => prev + 1);
+    if (localLiked === 0) {
+      setLocalLiked(2);
+      setDownvotes((prev) => prev + 1);
+    }
+    else if(localLiked===1){
+      setLocalLiked(2);
+      setUpvotes((prev) => prev - 1);
+      setDownvotes((prev) => prev + 1);
+    }
+    else{
+      setLocalLiked(0);
+      setDownvotes((prev) => prev - 1);
+    }
   }
   return (
     <ThemeProvider theme={theme}>
@@ -69,7 +95,8 @@ function Post(props) {
         <div className="post-side-bar">
           <div className="upvote-button">
             <div onClick={handleUpvote}>
-              <FaChevronUp className="upvote-icon" />
+              {(localLiked === 0 || localLiked===2 ) && <FaChevronUp />}
+              {localLiked === 1 && <FaChevronUp className="upvote-icon" />}
             </div>
 
             <div className="upvote-wrapper">
@@ -91,7 +118,8 @@ function Post(props) {
             </div>
 
             <div onClick={handleDownvote}>
-              <FaChevronDown className="upvote-icon" />
+              {(localLiked === 0 || localLiked===1 )&& <FaChevronDown />}
+              {localLiked === 2 && <FaChevronDown className="upvote-icon" />}
             </div>
           </div>
           <div className="comment-button">
