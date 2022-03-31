@@ -189,11 +189,11 @@ Header {
   left: 0px;
   top: 0px;
 }
-.main-navbar {
+/* .main-navbar {
   position: sticky;
   position: -webkit-sticky;
   top: 200px;
-}
+} */
 
 .loginicon {
   position: absolute;
@@ -535,4 +535,18 @@ body{
 
 .upvote-icon{
   background-color: #006064;
+}
+.loader-wrapper{
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width:100vw;
+  /* background-color: #140f57;
+  opacity: 50%; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

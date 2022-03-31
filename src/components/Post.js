@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { FaChevronUp } from "react-icons/fa";
 import { FaChevronDown } from "react-icons/fa";
 import { MdOutlineModeComment } from "react-icons/md";
@@ -20,7 +20,7 @@ import {
   responsiveFontSizes,
   ThemeProvider,
 } from "@mui/material/styles";
-import { useCookies } from 'react-cookie';
+import { useCookies } from "react-cookie";
 
 let theme = createTheme();
 theme = responsiveFontSizes(theme);
@@ -60,21 +60,19 @@ function Post(props) {
     handleClose();
     handleDelete(data._id);
   }
-  const handleUpvote = async() =>  {
+  const handleUpvote = async () => {
     if (localLiked === 0) {
       setLocalLiked(1);
       setUpvotes((prev) => prev + 1);
-    }
-    else if(localLiked===1){
+    } else if (localLiked === 1) {
       setLocalLiked(0);
       setUpvotes((prev) => prev - 1);
-    }
-    else{
+    } else {
       setLocalLiked(1);
       setUpvotes((prev) => prev + 1);
       setDownvotes((prev) => prev - 1);
     }
-    
+
     const res = await fetch(
       `https://dry-crag-93232.herokuapp.com/${data._id}/upvote`,
       {
@@ -88,17 +86,15 @@ function Post(props) {
     const resp = await res.json();
     console.log(resp);
   };
-  const handleDownvote = async() =>  {
+  const handleDownvote = async () => {
     if (localLiked === 0) {
       setLocalLiked(2);
       setDownvotes((prev) => prev + 1);
-    }
-    else if(localLiked===1){
+    } else if (localLiked === 1) {
       setLocalLiked(2);
       setUpvotes((prev) => prev - 1);
       setDownvotes((prev) => prev + 1);
-    }
-    else{
+    } else {
       setLocalLiked(0);
       setDownvotes((prev) => prev - 1);
     }
@@ -114,16 +110,15 @@ function Post(props) {
     const resp = await res.json();
     console.log(resp);
   };
-useEffect(() => {
-  const up=data.upvotes;
-const down=data.downvotes;
-console.log(data);
-if(up.find(element => element === cookies.userid)){
-   setLocalLiked(1);
-}
-else if(down.find(element => element === cookies.userid)){
-    setLocalLiked(2);
-}
+  useEffect(() => {
+    const up = data.upvotes;
+    const down = data.downvotes;
+    console.log(data);
+    if (up.find((element) => element === cookies.userid)) {
+      setLocalLiked(1);
+    } else if (down.find((element) => element === cookies.userid)) {
+      setLocalLiked(2);
+    }
   }, []);
   return (
     <ThemeProvider theme={theme}>
@@ -131,7 +126,7 @@ else if(down.find(element => element === cookies.userid)){
         <div className="post-side-bar">
           <div className="upvote-button">
             <div onClick={handleUpvote}>
-              {(localLiked === 0 || localLiked===2 ) && <FaChevronUp />}
+              {(localLiked === 0 || localLiked === 2) && <FaChevronUp />}
               {localLiked === 1 && <FaChevronUp className="upvote-icon" />}
             </div>
 
@@ -154,7 +149,7 @@ else if(down.find(element => element === cookies.userid)){
             </div>
 
             <div onClick={handleDownvote}>
-              {(localLiked === 0 || localLiked===1 )&& <FaChevronDown />}
+              {(localLiked === 0 || localLiked === 1) && <FaChevronDown />}
               {localLiked === 2 && <FaChevronDown className="upvote-icon" />}
             </div>
           </div>

@@ -23,6 +23,7 @@ import { v4 as uuidv4 } from "uuid";
 import Paper from "@mui/material/Paper";
 import FileUpload from "react-mui-fileuploader";
 import Skeleton from "@mui/material/Skeleton";
+import Loader from './Loader';
 
 const style = {
   position: "absolute",
@@ -61,6 +62,7 @@ function PersonalPosts(props) {
         },
       }
     );
+    setLoading(true);
     const message= res.json();
     console.log(message);
     getPersonalPosts();
@@ -84,6 +86,8 @@ function PersonalPosts(props) {
     );
     const data = await res.json();
     console.log(data);
+    setOpen(false);
+    setLoading(true);
     getPersonalPosts();
   };
 
@@ -357,7 +361,8 @@ function PersonalPosts(props) {
         </Box>
       </Modal>
       {isLoading ? (
-        <Skeleton />
+        //<Skeleton />
+        <Loader/>
       ) : (
         /* allPosts.map((data) => {
           {

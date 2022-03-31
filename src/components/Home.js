@@ -313,7 +313,6 @@ function Home() {
       <div className="header">
         <Header handleOpen={handleOpen} />
       </div>
-      <h1>{cookies.username}</h1>
       <div className="center">
         <div className="main">
           <Main />

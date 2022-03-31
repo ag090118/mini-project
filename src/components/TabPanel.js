@@ -25,7 +25,6 @@ function TabPanel(props) {
   }, []);
   return (
     <div>
-    {console.log(postinfo)}
       {value === 0 && <MalwareTab index={value} data={postinfo} isLoading={isLoading}/>}
       {value !== 0 && <MalwareTab index={value} data={postinfo} isLoading={isLoading}/>}
     </div>
