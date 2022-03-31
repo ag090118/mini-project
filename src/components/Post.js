@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { FaChevronUp } from "react-icons/fa";
 import { FaChevronDown } from "react-icons/fa";
 import { MdOutlineModeComment } from "react-icons/md";
@@ -31,7 +31,7 @@ function Post(props) {
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [upvotes, setUpvotes] = useState(data.upvotes.length);
   const [downvotes, setDownvotes] = useState(data.downvotes.length);
-  const [localLiked, setLocalLiked] = useState(liked);
+  const [localLiked, setLocalLiked] = useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -114,6 +114,17 @@ function Post(props) {
     const resp = await res.json();
     console.log(resp);
   };
+useEffect(() => {
+  const up=data.upvotes;
+const down=data.downvotes;
+console.log(data);
+if(up.find(element => element === cookies.userid)){
+   setLocalLiked(1);
+}
+else if(down.find(element => element === cookies.userid)){
+    setLocalLiked(2);
+}
+  }, []);
   return (
     <ThemeProvider theme={theme}>
       <div className="post">

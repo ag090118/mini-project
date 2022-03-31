@@ -1,9 +1,12 @@
 import React,{useEffect,useState} from "react";
+import { Cookies } from "react-cookie";
 import MalwareTab from "./MalwareTab";
+import { useCookies } from 'react-cookie';
 
 function TabPanel(props) {
   const { value } = props;
   const [isLoading, setLoading] = useState(true);
+  const [cookies, setCookie] = useCookies({});
   const [postinfo,setPostinfo]=useState([
   ]);
   const getPosts = async () => {
@@ -14,6 +17,7 @@ function TabPanel(props) {
       .then((resp) => {
         setPostinfo(resp);
         setLoading(false);
+        
       });
   }
   useEffect(() => {
