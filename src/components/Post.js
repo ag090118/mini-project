@@ -20,12 +20,14 @@ import {
   responsiveFontSizes,
   ThemeProvider,
 } from "@mui/material/styles";
+import { useCookies } from 'react-cookie';
 
 let theme = createTheme();
 theme = responsiveFontSizes(theme);
 function Post(props) {
   const { liked, profile, data, isMenuButtons, handleOpen, handleDelete } =
     props;
+  const [cookies, setCookie] = useCookies({});
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [upvotes, setUpvotes] = useState(data.upvotes.length);
   const [downvotes, setDownvotes] = useState(data.downvotes.length);
@@ -58,7 +60,7 @@ function Post(props) {
     handleClose();
     handleDelete(data._id);
   }
-  function handleUpvote() {
+  const handleUpvote = async() =>  {
     if (localLiked === 0) {
       setLocalLiked(1);
       setUpvotes((prev) => prev + 1);
@@ -72,9 +74,21 @@ function Post(props) {
       setUpvotes((prev) => prev + 1);
       setDownvotes((prev) => prev - 1);
     }
-
-  }
-  function handleDownvote() {
+    
+    const res = await fetch(
+      `https://dry-crag-93232.herokuapp.com/${data._id}/upvote`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: cookies.jwtoken,
+        },
+      }
+    );
+    console.log(data._id);
+    const resp = await res.json();
+    console.log(resp);
+  };
+  const handleDownvote = async() =>  {
     if (localLiked === 0) {
       setLocalLiked(2);
       setDownvotes((prev) => prev + 1);
@@ -88,7 +102,18 @@ function Post(props) {
       setLocalLiked(0);
       setDownvotes((prev) => prev - 1);
     }
-  }
+    const res = await fetch(
+      `https://dry-crag-93232.herokuapp.com/${data._id}/downvote`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: cookies.jwtoken,
+        },
+      }
+    );
+    const resp = await res.json();
+    console.log(resp);
+  };
   return (
     <ThemeProvider theme={theme}>
       <div className="post">
