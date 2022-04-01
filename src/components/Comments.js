@@ -49,6 +49,7 @@ function Comments(props) {
         ["time"] : MyFunction()
       };
     });
+    localStorage.setItem("time",MyFunction())
     console.log(currentComment);
     console.log(id);
     const res=await fetch(`https://dry-crag-93232.herokuapp.com/${id}/createcomment`, {
@@ -84,7 +85,7 @@ function Comments(props) {
         <div className="comment-box">
           <TextField
             variant="filled"
-            multiline="true"
+            multiline={true}
             name= "description"
             value={currentComment.description}
             onChange={handleChange}
@@ -97,8 +98,42 @@ function Comments(props) {
           <IoSend />
         </div>
       </div>
-
-      {comments.map((comment) => (
+      {comments.map((comment,index) => index===0 && !comment.authorname? (
+        <List
+          sx={{
+            width: "100%",
+            maxWidth: "100%",
+            bgcolor: "background.inherit"
+          }}
+        >
+          <ListItem alignItems="flex-start">
+            <ListItemAvatar>
+              <Avatar
+                alt={cookies.username}
+                src="/static/images/avatar/1.jpg"
+              />
+            </ListItemAvatar>
+            <ListItemText
+              primary={cookies.username}
+              secondary={
+                <React.Fragment>
+                  <Typography
+                    sx={{ display: "inline" }}
+                    component="span"
+                    variant="body2"
+                    color="text.primary"
+                  >
+                    {localStorage.getItem("time")}
+                  </Typography>
+                  {" — "}
+                  {comment.description}
+                </React.Fragment>
+              }
+            />
+          </ListItem>
+          <Divider variant="inset" component="li" />
+        </List>
+      ) : (
         <List
           sx={{
             width: "100%",
@@ -133,7 +168,8 @@ function Comments(props) {
           </ListItem>
           <Divider variant="inset" component="li" />
         </List>
-      ))}
+      )
+      )}
     </div>
   );
 }
