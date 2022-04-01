@@ -84,7 +84,7 @@ function Post(props) {
     );
     console.log(data._id);
     const resp = await res.json();
-    console.log(resp);
+    //console.log(resp);
   };
   const handleDownvote = async () => {
     if (localLiked === 0) {
@@ -246,7 +246,7 @@ function Post(props) {
           {commentsOpen ? (
             <div className="post-footer">
               <Divider color="#000000" flexItem />
-              <Comments postinfo={postinfo} />{" "}
+              <Comments id={data._id} comm={data.comments} />
             </div>
           ) : null}
         </div>

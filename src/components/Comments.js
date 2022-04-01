@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { IoSend } from "react-icons/io5";
 import TextField from "@mui/material/TextField";
 import Divider from "@mui/material/Divider";
@@ -9,45 +9,75 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
+import { useCookies } from 'react-cookie';
 
-function Comments() {
-  const [comments, setComments] = useState([
+function MyFunction() {
+  var myCurrentDate = new Date();
+  var date = myCurrentDate.getFullYear() + '-' + (myCurrentDate.getMonth()+1) + '-' + myCurrentDate.getDate() +' '+ myCurrentDate.getHours()+':'+ myCurrentDate.getMinutes()+':'+ myCurrentDate.getSeconds();
+  const newCurrentDate =date;
+  return newCurrentDate;
+}
+
+function Comments(props) {
+  const {id,comm} = props;
+
+  const [cookies, setCookies] = useCookies({});
+  const [comments, setComments] = useState(comm);
+  const [currentComment, setCurrentComment] = useState(
     {
-      username: "Smitesh",
-      date: "28/02/22",
-      data: "my test comment"
-    },
-    {
-      username: "Oggy",
-      date: "28/02/22",
-      data: "hmm test comment part 2"
+      authorid: "",
+      authorname: "",
+      description: "",
+      time: "",
     }
-  ]);
-  const [currentComment, setCurrentComment] = useState({
-    username: "Smitesh",
-    date: "28/02/22",
-    data: ""
-  });
+  );
   function handleChange(e) {
     const value = e.target.value;
     setCurrentComment((prevValue) => {
       return {
-        ...prevValue,
-        ["data"]: value
+        ...prevValue,  
+        ["description"]: value
+        // description : value,
       };
     });
   }
-  function handleSubmit() {
+  const handleSubmit = async() => {
+    setCurrentComment((prevValue) => {
+      return {
+        ...prevValue,
+        ["authorname"] : cookies.username,
+        ["time"] : MyFunction()
+      };
+    });
+    console.log(currentComment);
+    console.log(id);
+    const res=await fetch(`https://dry-crag-93232.herokuapp.com/${id}/createcomment`, {
+      method: "PATCH",
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization" : cookies.jwtoken
+      },
+      body: JSON.stringify({
+        description :currentComment.description,
+      })
+    });
+    const resp = await res.json();
+    console.log(resp);
+
     setComments((prevNotes) => {
       return [currentComment, ...prevNotes];
     });
     setCurrentComment((prevValue) => {
       return {
         ...prevValue,
-        ["data"]: ""
+        [name]: ""
       };
     });
-  }
+  };
+  // useEffect(() => {
+  //   setComments(comm);
+  //   console.log(comments);
+  // }, []);
   return (
     <div>
       <div className="comment-wrapper">
@@ -55,7 +85,8 @@ function Comments() {
           <TextField
             variant="filled"
             multiline="true"
-            value={currentComment.data}
+            name= "description"
+            value={currentComment.description}
             onChange={handleChange}
             id="outlined-basic"
             fullWidth="true"
@@ -78,12 +109,12 @@ function Comments() {
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
               <Avatar
-                alt={comment.username}
+                alt={comment.authorname}
                 src="/static/images/avatar/1.jpg"
               />
             </ListItemAvatar>
             <ListItemText
-              primary={comment.username}
+              primary={comment.authorname}
               secondary={
                 <React.Fragment>
                   <Typography
@@ -92,10 +123,10 @@ function Comments() {
                     variant="body2"
                     color="text.primary"
                   >
-                    {comment.date}
+                    {comment.time}
                   </Typography>
                   {" — "}
-                  {comment.data}
+                  {comment.description}
                 </React.Fragment>
               }
             />

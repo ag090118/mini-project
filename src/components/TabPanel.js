@@ -17,7 +17,6 @@ function TabPanel(props) {
       .then((resp) => {
         setPostinfo(resp);
         setLoading(false);
-        
       });
   }
   useEffect(() => {
