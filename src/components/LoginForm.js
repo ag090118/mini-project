@@ -159,7 +159,7 @@ function signInWithGoogle() {
             sx={{
               textAlign: "center",
               padding: "3%",
-              color: "white",
+              color: "teal",
               justifyContent: "center",
               alignItems: "center",
               fontSize: "1.5em",

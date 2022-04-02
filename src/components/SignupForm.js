@@ -74,7 +74,7 @@ const LoginForm = () => {
         <Typography
           sx={{
             padding: "3%",
-            color: "white",
+            color: "teal",
             justifyContent: "centre",
             alignItems: "centre",
             fontSize: "1.5em",

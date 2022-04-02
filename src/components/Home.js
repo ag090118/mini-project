@@ -134,24 +134,6 @@ function Home() {
     });
     const data = await res.json();
     console.log(data);
-    // if (res.status === 200 || res.status === 201) {
-    //   localStorage.setItem("Token", data.token);
-    //   setCookie("username", userName, {
-    //     path: "/",
-    //     expire: new Date(new Date().getTime() + 258920000),
-    //   });
-    //   setCookie("jwtoken", localStorage.getItem("Token"), {
-    //     path: "/",
-    //     expire: new Date(new Date().getTime() + 258920000),
-    //   });
-    //   //setCookie('useremail', userName, { path: '/' , expire: new Date(new Date().getTime()+ 258920000)});
-    //   store.dispatch(
-    //     loginFunc(user.userId, user.userName, localStorage.getItem("Token"))
-    //   );
-    //   navigate("/");
-    // } else if (res.status === 400 || res.status === 404) {
-    //   alert("USER NOT REGISTERED");
-    // } else alert("FAILED");
   };
   return (
     <div className="App">
@@ -317,7 +299,7 @@ function Home() {
         <div className="main">
           <Main />
         </div>
-        <div className="side">
+        <div className="side" id="scroll">
           <News />
         </div>
       </div>

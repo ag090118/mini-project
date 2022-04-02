@@ -12,7 +12,7 @@ function Main() {
   return (
     <div>
       <div className="main-navbar">
-        <Box sx={{ borderRadius: "5px", bgcolor: "#2C3333", color: "white" }}>
+        <Box sx={{ borderRadius: "5px", bgcolor: "#2C3333", color: "white"}}>
           <Tabs
             value={value}
             onChange={handleChange}
@@ -21,7 +21,7 @@ function Main() {
             aria-label="scrollable auto tabs example"
             textColor="inherit"
           >
-            <Tab label="Home" />
+            <Tab label="All" />
             <Tab label="Virus" />
             <Tab label="worm" />
             <Tab label="Trojan" />

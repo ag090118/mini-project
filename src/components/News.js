@@ -8,39 +8,41 @@ import { v4 as uuidv4 } from "uuid";
 import Skeleton from "@mui/material/Skeleton";
 function NewsPreLoader() {
   return (
-    <Card sx={{ maxWidth: 345, marginBottom: "5%" }} raised={true}>
-      <Skeleton
-        variant="rectangular"
-        height="15vh"
-        width="90%"
-        style={{
-          marginLeft: "auto",
-          marginRight: "auto",
-          marginTop: "1vh",
-        }}
-      />
-      <Skeleton
-        variant="text"
-        height="5vh"
-        width="90%"
-        style={{
-          marginLeft: "auto",
-          marginRight: "auto",
-          marginTop: "1vh",
-        }}
-      />
-      <Skeleton
-        variant="rectangular"
-        height="8vh"
-        width="90%"
-        style={{
-          marginLeft: "auto",
-          marginRight: "auto",
-          marginTop: "1vh",
-          marginBottom: "1vh",
-        }}
-      />
-    </Card>
+    <div className="news-card-wrapper">
+      <Card sx={{ width: "18vw", marginBottom: "5%" }} raised={true}>
+        <Skeleton
+          variant="rectangular"
+          height="15vh"
+          width="90%"
+          style={{
+            marginLeft: "auto",
+            marginRight: "auto",
+            marginTop: "1vh",
+          }}
+        />
+        <Skeleton
+          variant="text"
+          height="5vh"
+          width="90%"
+          style={{
+            marginLeft: "auto",
+            marginRight: "auto",
+            marginTop: "1vh",
+          }}
+        />
+        <Skeleton
+          variant="rectangular"
+          height="8vh"
+          width="90%"
+          style={{
+            marginLeft: "auto",
+            marginRight: "auto",
+            marginTop: "1vh",
+            marginBottom: "1vh",
+          }}
+        />
+      </Card>
+    </div>
   );
 }
 function News() {
@@ -88,7 +90,26 @@ function News() {
               paddingBottom: "5%",
             }}
           >
-            <Card sx={{ maxWidth: 345 }} raised={true}>
+            <div className="news-card-wrapper">
+              {/* <Typography gutterBottom variant="subtitle2" component="div">
+                {post.title}
+              </Typography>
+              <Typography
+                sx={{
+                  display: "-webkit-box",
+                  overflow: "hidden",
+                  WebkitBoxOrient: "vertical",
+                  WebkitLineClamp: 3,
+                }}
+                variant="body"
+                color="text.secondary"
+              >
+                {post.description}
+              </Typography>
+              <Button href={post.link} size="small" color="primary">
+                View
+              </Button> */}
+               <Card sx={{ maxWidth: "18vw"}} raised={true}>
               <CardActionArea>
                 <CardMedia
                   component="img"
@@ -119,7 +140,8 @@ function News() {
                   View
                 </Button>
               </CardActions>
-            </Card>
+            </Card> 
+            </div>
           </div>
         ))
       )}
