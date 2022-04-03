@@ -10,6 +10,8 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { useCookies } from "react-cookie";
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
 
 function MyFunction() {
   var myCurrentDate = new Date();
@@ -33,6 +35,9 @@ function Comments(props) {
   const { id, comm } = props;
   const [cookies, setCookies] = useCookies({});
   const [comments, setComments] = useState(comm);
+  const [open, setOpen] = React.useState(false);
+  const [changedId, setChangedId] = useState();
+  const [isLoading, setLoading] = useState(true);
   const [currentComment, setCurrentComment] = useState({
     authorid: "",
     authorname: "",
@@ -153,7 +158,22 @@ function Comments(props) {
               bgcolor: "background.inherit",
             }}
           >
-            <ListItem alignItems="flex-start">
+          {
+            (true)?
+          (<ListItem
+          alignItems="flex-start"
+                  secondaryAction={
+                    <IconButton  
+                    onClick={()=>console.log(comment)}
+                    edge="end" aria-label="delete">
+                      <DeleteIcon />
+                    </IconButton>
+                  }
+              >):
+                (<ListItem
+                alignItems="flex-start"
+              >
+            )}
               <ListItemAvatar>
                 <Avatar
                   alt={comment.authorname}
@@ -162,6 +182,12 @@ function Comments(props) {
               </ListItemAvatar>
               <ListItemText
                 primary={comment.authorname}
+                
+                  secondaryAction={
+                    <IconButton edge="end" aria-label="delete">
+                      <DeleteIcon />
+                    </IconButton>
+                  }
                 secondary={
                   <React.Fragment>
                     <Typography
