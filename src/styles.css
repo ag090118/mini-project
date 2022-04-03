@@ -11,6 +11,7 @@ html {
   font-family: "Montserrat", sans-serif;
 }
 body {
+  /* font-family: Roboto, Helvetica, Arial, sans-serif; */
   font-family: Montserrat, sans-serif;
   /*background: #28223f;*/
   background-color: #e0e0e0;
@@ -20,7 +21,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  border-radius: 0px 0px 40px 40px;
+  border-radius: 40px 40px 40px 40px;
   background: #e0e0e0;
   box-shadow: -20px 10px 60px #bebebe, 20px -20px 60px #ffffff;
   /* margin-top: 1vh; */

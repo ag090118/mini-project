@@ -23,6 +23,7 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { v4 as uuidv4 } from "uuid";
 import Paper from "@mui/material/Paper";
 import FileUpload from "react-mui-fileuploader";
+import Navbar from './Navbar';
 
 const style = {
   position: "absolute",
@@ -137,6 +138,7 @@ function Home() {
   };
   return (
     <div className="App">
+    {/* <Navbar/> */}
       <div className="postform-wrapper">
         <Modal
           keepMounted
