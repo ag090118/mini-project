@@ -113,7 +113,7 @@ function Post(props) {
   useEffect(() => {
     const up = data.upvotes;
     const down = data.downvotes;
-    console.log(data);
+    //console.log(data);
     if (up.find((element) => element === cookies.userid)) {
       setLocalLiked(1);
     } else if (down.find((element) => element === cookies.userid)) {

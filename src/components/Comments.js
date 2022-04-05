@@ -12,6 +12,8 @@ import Typography from "@mui/material/Typography";
 import { useCookies } from "react-cookie";
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+import Loader from './Loader';
 
 function MyFunction() {
   var myCurrentDate = new Date();
@@ -37,7 +39,7 @@ function Comments(props) {
   const [comments, setComments] = useState(comm);
   const [open, setOpen] = React.useState(false);
   const [changedId, setChangedId] = useState();
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(false);
   const [currentComment, setCurrentComment] = useState({
     authorid: "",
     authorname: "",
@@ -54,17 +56,35 @@ function Comments(props) {
     });
   }
   const handleSubmit = async () => {
-    setCurrentComment((prevValue) => {
-      return {
-        ...prevValue,
-        ["authorname"]: "smith",
-        ["time"]: MyFunction(),
-      };
-    });
-    console.log("umm",currentComment);
-    localStorage.setItem("time", MyFunction());
-    const res = await fetch(
+    setLoading(true);
+    await fetch(
       `https://dry-crag-93232.herokuapp.com/${id}/createcomment`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": cookies.jwtoken,
+        },
+        body: JSON.stringify({
+          description: currentComment.description,
+        }),
+      })
+      .then((resp) => resp.json())
+      .then((resp) => {    
+        setComments(resp.comments);
+        setLoading(false);
+      });
+    console.log(comments);
+    setCurrentComment({
+      authorid: "",
+      authorname: "",
+      description: "",
+      time: "",
+    });
+  };
+  const handleUpdate = async (uid) => {
+    const res = await fetch(
+      `https://dry-crag-93232.herokuapp.com/${id}/updatecomment/${uid}`,
       {
         method: "PATCH",
         headers: {
@@ -78,22 +98,23 @@ function Comments(props) {
     );
     const resp = await res.json();
     console.log(resp);
-
-    setComments((prevNotes) => {
-      return [currentComment, ...prevNotes];
-    });
-    setCurrentComment({
-      authorid: "",
-      authorname: "",
-      description: "",
-      time: "",
-    });
-    // setCurrentComment((prevValue) => {
-    //   return {
-    //     ...prevValue,
-    //     [name]: ""
-    //   };
-    // });
+  };
+  const handleDelete = async (did) => {
+    setLoading(true);
+    const res = await fetch(
+      `https://dry-crag-93232.herokuapp.com/${id}/deletecomment/${did}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Authorization": cookies.jwtoken,
+        },
+      }
+    );
+    const resp = await res.json();
+    console.log(resp);
+    setComments(resp.comments);
+    setLoading(false);
+    console.log(comments);
   };
   return (
     <div>
@@ -110,11 +131,14 @@ function Comments(props) {
             placeholder="comment"
           />
         </div>
-        <div onClick={handleSubmit} className="comment-send-icon">
+        <div onClick={()=>handleSubmit()} className="comment-send-icon">
           <IoSend />
         </div>
       </div>
-      {comments.map((comment, index) =>
+
+      {isLoading ? (
+        <Loader/>
+      ) : (comments.map((comment, index) =>
         /* index === 0 && !comment.authorname ? (
           <List
             sx={{
@@ -158,22 +182,24 @@ function Comments(props) {
               bgcolor: "background.inherit",
             }}
           >
-          {
-            (true)?
-          (<ListItem
+          
+          <ListItem
           alignItems="flex-start"
                   secondaryAction={
-                    <IconButton  
-                    onClick={()=>console.log(comment)}
+                  (cookies.userid==comment.authorid)? <div><IconButton  
+                    onClick={()=>handleDelete(comment._id)}
                     edge="end" aria-label="delete">
                       <DeleteIcon />
                     </IconButton>
+                    <IconButton  
+                    onClick={()=>handleUpdate(comment._id)}
+                    edge="end" aria-label="delete">
+                      <EditIcon />
+                    </IconButton>
+                    </div>
+                    : null
                   }
-              >):
-                (<ListItem
-                alignItems="flex-start"
               >
-            )}
               <ListItemAvatar>
                 <Avatar
                   alt={comment.authorname}
@@ -206,8 +232,7 @@ function Comments(props) {
             </ListItem>
             <Divider variant="inset" component="li" />
           </List>
-        
-      )}
+      ))}
     </div>
   );
 }
