@@ -40,6 +40,9 @@ function Comments(props) {
   const [open, setOpen] = React.useState(false);
   const [changedId, setChangedId] = useState();
   const [isLoading, setLoading] = useState(false);
+  const [com, setCom] = useState("");
+  const [cid, setCid] = useState(null);
+  const [isEditing, setIsEditing] = useState(false)
   const [currentComment, setCurrentComment] = useState({
     authorid: "",
     authorname: "",
@@ -70,11 +73,10 @@ function Comments(props) {
         }),
       })
       .then((resp) => resp.json())
-      .then((resp) => {    
-        setComments(resp.comments);
+      .then((resp) => { 
+        setComments(resp);
         setLoading(false);
       });
-    console.log(comments);
     setCurrentComment({
       authorid: "",
       authorname: "",
@@ -83,6 +85,7 @@ function Comments(props) {
     });
   };
   const handleUpdate = async (uid) => {
+    setLoading(true);
     const res = await fetch(
       `https://dry-crag-93232.herokuapp.com/${id}/updatecomment/${uid}`,
       {
@@ -92,12 +95,16 @@ function Comments(props) {
           Authorization: cookies.jwtoken,
         },
         body: JSON.stringify({
-          description: currentComment.description,
+          description: com,
         }),
       }
     );
     const resp = await res.json();
     console.log(resp);
+    setComments(resp.comments);
+    setLoading(false);
+    console.log(comments);
+    setIsEditing(false);
   };
   const handleDelete = async (did) => {
     setLoading(true);
@@ -116,6 +123,15 @@ function Comments(props) {
     setLoading(false);
     console.log(comments);
   };
+  const handleInputChange = (e)=>{
+    setCom(e.target.value);
+    // console.log( e.target.value );
+    // your awesome stuffs goes here
+};
+const Perform = (comid)=>{
+    setIsEditing(true);
+    setCid(comid);
+};
   return (
     <div>
       <div className="comment-wrapper">
@@ -192,7 +208,7 @@ function Comments(props) {
                       <DeleteIcon />
                     </IconButton>
                     <IconButton  
-                    onClick={()=>handleUpdate(comment._id)}
+                    onClick={()=> Perform(comment._id)}
                     edge="end" aria-label="delete">
                       <EditIcon />
                     </IconButton>
@@ -225,7 +241,25 @@ function Comments(props) {
                       {comment.time}
                     </Typography>
                     {" — "}
-                    {comment.description}
+                    {
+                isEditing && cid==comment._id ? 
+                //<input type = 'text' onChange={handleInputChange} defaultValue = {comment.description}/> 
+                <div className="comment-box">
+                    <TextField
+                    variant="filled"
+                    multiline={true}
+                    defaultValue={comment.description}
+                    onChange={handleInputChange}
+                    id="outlined-basic"
+                    fullWidth="true"
+                    placeholder="comment"
+                  />
+                  <div onClick={()=>handleUpdate(comment._id)} className="comment-send-icon">
+                    <IoSend />
+                  </div>
+                  </div>
+                : <h3>{comment.description}</h3>
+            }
                   </React.Fragment>
                 }
               />

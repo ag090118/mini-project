@@ -58,7 +58,7 @@ function PersonalPosts(props) {
       {
         method: "DELETE",
         headers: {
-          Authorization: cookies.jwtoken,
+          "Authorization": cookies.jwtoken,
         },
       }
     );
@@ -74,7 +74,7 @@ function PersonalPosts(props) {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: cookies.jwtoken,
+          "Authorization": cookies.jwtoken,
         },
         body: JSON.stringify({
           title: title,
