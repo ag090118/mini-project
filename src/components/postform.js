@@ -35,7 +35,6 @@ const style = {
 };
 
 function Postform(props) {
-  const {open}
   const name = useSelector((state) => state.checkUserLogin.userName);
   const [postType, setPostType] = React.useState("Discussion");
   const [open, setOpen] = React.useState(false);
@@ -85,7 +84,7 @@ function Postform(props) {
     );
   };
   const handleAddCol = (chipToAdd) => {
-    console.log(chipToAdd);
+    //console.log(chipToAdd);
     setCollaborators([...collaborators, chipToAdd]);
   };
 
@@ -100,9 +99,15 @@ function Postform(props) {
   const handleFileUploadError = (error) => {
     // Do something...
   };
-
+  // const formHandler = (e) => {
+  //   e.preventDefault();
+  //   const file = e.target[0].files[0];
+  //   handleFilesChange(file);
+  // };
   const handleFilesChange = (files) => {
     console.log(files);
+    if (!files) return;
+    
     // Do something...
   };
   const checkRender = async () => {
@@ -132,6 +137,30 @@ function Postform(props) {
     const data = await res.json();
     console.log(data);
   };
+  
+
+  // const uploadFiles = (file) => {
+    
+  //   if (!file) return;
+  //   const sotrageRef = ref(storage, `files/${file.name}`);
+  //   const uploadTask = uploadBytesResumable(sotrageRef, file);
+
+  //   uploadTask.on(
+  //     "state_changed",
+  //     (snapshot) => {
+  //       const prog = Math.round(
+  //         (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+  //       );
+  //       setProgress(prog);
+  //     },
+  //     (error) => console.log(error),
+  //     () => {
+  //       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+  //         console.log("File available at", downloadURL);
+  //       });
+  //     }
+  //   );
+  // };
   return (
     <div className="postform-wrapper">
       <Modal
@@ -245,12 +274,13 @@ function Postform(props) {
                   "fill it or move it to use the default error message"
                 }
                 allowedExtensions={["jpg", "jpeg", "pdf", "zip"]}
-                onFilesChange={handleFilesChange}
-                onError={handleFileUploadError}
+                onFilesChange={()=>handleFilesChange(files)}
+                //onError={handleFileUploadError}
                 // imageSrc={"path/to/custom/image"}
                 bannerProps={{ elevation: 0, variant: "outlined" }}
                 containerProps={{ elevation: 0, variant: "outlined" }}
               />
+              
             </div>
           ) : null}
 

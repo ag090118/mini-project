@@ -24,6 +24,8 @@ import { v4 as uuidv4 } from "uuid";
 import Paper from "@mui/material/Paper";
 import FileUpload from "react-mui-fileuploader";
 import Navbar from './Navbar';
+import { storage } from "./Firebase/firebase";
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 
 const style = {
   position: "absolute",
@@ -47,6 +49,7 @@ function Home() {
   const handleClose = () => setOpen(false);
   const [convertedText, setConvertedText] = useState("");
   const [cookies, setCookie] = useCookies();
+  const [filestemp, setFilesTemp] = useState(null);
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [chipData, setChipData] = React.useState([
@@ -89,7 +92,7 @@ function Home() {
     );
   };
   const handleAddCol = (chipToAdd) => {
-    console.log(chipToAdd);
+    //console.log(chipToAdd);
     setCollaborators([...collaborators, chipToAdd]);
   };
 
@@ -106,8 +109,9 @@ function Home() {
   };
 
   const handleFilesChange = (files) => {
-    console.log(files);
-    // Do something...
+    setFilesTemp(files);
+    // localStorage.setItem("files", JSON.stringify(files));
+    // console.log(localStorage.getItem("files"));
   };
   const checkRender = async () => {
     if (!cookies.jwtoken) {
@@ -118,7 +122,9 @@ function Home() {
     checkRender();
   }, []);
 
+  const [progress, setProgress] = useState(0);
   const postSubmit = async (e) => {
+    setOpen(false);
     e.preventDefault();
     const res = await fetch("https://dry-crag-93232.herokuapp.com/createpost", {
       method: "POST",
@@ -135,6 +141,28 @@ function Home() {
     });
     const data = await res.json();
     console.log(data);
+    //const files = JSON.parse(localStorage.getItem("files"));
+    console.log(filestemp);
+    if (!filestemp) return;
+    const file=filestemp[0];
+    const sotrageRef = ref(storage, `files/${file.name}`);
+    const uploadTask = uploadBytesResumable(sotrageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const prog = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(prog);
+      },
+      (error) => console.log(error),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+        });
+      }
+    );
   };
   return (
     <div className="App">
@@ -244,7 +272,7 @@ function Home() {
                   leftLabel="or"
                   rightLabel="to select files"
                   buttonLabel="click here"
-                  maxFileSize={10}
+                  maxFileSize={20}
                   maxUploadFiles={0}
                   maxFilesContainerHeight={357}
                   errorSizeMessage={
@@ -257,6 +285,8 @@ function Home() {
                   bannerProps={{ elevation: 0, variant: "outlined" }}
                   containerProps={{ elevation: 0, variant: "outlined" }}
                 />
+                <br></br>
+                <h2>Uploading done {progress}%</h2>
               </div>
             ) : null}
 
