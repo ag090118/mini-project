@@ -11,10 +11,23 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
 import { RiUserFollowLine } from "react-icons/ri";
+import { RiUserFollowFill } from "react-icons/ri";
 
 let theme = createTheme();
 theme = responsiveFontSizes(theme);
-
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "30%",
+  height: "20%",
+  bgcolor: "background.paper",
+  border: "1px solid #000",
+  boxShadow: 24,
+  p: 2,
+  overflow: "auto",
+};
 const style1 = {
   position: "absolute",
   top: "50%",
@@ -45,6 +58,7 @@ function PersonalInfo(props) {
   const { data, isLoading } = props;
   // console.log(data);
   // console.log(isLoading);
+  const [follow, setFollow] = useState(false);
   const [open1, setOpen1] = React.useState(false);
   const handleOpen1 = () => {
     setOpen1(true);
@@ -53,11 +67,18 @@ function PersonalInfo(props) {
     setOpen1(false);
   };
   const [open2, setOpen2] = React.useState(false);
+  const [open3, setOpen3] = React.useState(false);
   const handleOpen2 = () => {
     setOpen2(true);
   };
   const handleClose2 = () => {
     setOpen2(false);
+  };
+  const handleOpen3 = () => {
+    setOpen3(true);
+  };
+  const handleClose3 = () => {
+    setOpen3(false);
   };
   const [image, setImage] = useState(null);
 
@@ -66,6 +87,18 @@ function PersonalInfo(props) {
       setImage(URL.createObjectURL(event.target.files[0]));
     }
   };
+  function handleFollow() {
+    if(follow){
+      handleOpen3();
+    }
+    else{
+      setFollow(true);
+    }
+  }
+  function handleUnfollowConfirm(){
+    setFollow(false);
+    handleClose3();
+  }
   const [followdata, setData] = React.useState([
     "Smitesh",
     "Aryan",
@@ -108,12 +141,36 @@ function PersonalInfo(props) {
             />
           </div>
           <div class="profile-name">
-            <button class="cta">
-              <span>Follow</span>
-              <div>
-                <RiUserFollowLine/>
-              </div>
+            <button onClick={handleFollow} class="cta">
+              {follow ? <span>Following</span> : <span>Follow</span>}
+              <div>{follow ? <RiUserFollowFill /> : <RiUserFollowLine />}</div>
             </button>
+            <Modal
+              open={open3}
+              onClose={handleClose3}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style} id="scroll">
+                <Typography
+                  variant="h4"
+                  sx={{
+                    padding: "2%",
+                    fontSize: "80%",
+                  }}
+                  align="center"
+                >
+                  {isLoading ? (
+                    <Skeleton />
+                  ) : (
+                    <div className="unfollow-modal">
+                      Are you sure you want to unfollow {data.name}
+                      <button onClick={handleUnfollowConfirm} className="unfollow-confirm-button"> YES</button>
+                    </div>
+                  )}
+                </Typography>
+              </Box>
+            </Modal>
             {isLoading ? (
               <Skeleton />
             ) : (
@@ -180,7 +237,7 @@ function PersonalInfo(props) {
                   }}
                   align="center"
                 >
-                  {data.followers}
+                  {data.followers.length}
                 </Typography>
               )}
               <Typography
@@ -226,7 +283,7 @@ function PersonalInfo(props) {
                   }}
                   align="center"
                 >
-                  {data.following}
+                  {data.following.length}
                 </Typography>
               )}
               <Typography

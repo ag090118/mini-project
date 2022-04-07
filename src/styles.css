@@ -554,7 +554,6 @@ Header {
   width: 100%;
   height: 100%;
   position: relative;
-
 }
 
 .news-card-wrapper {
@@ -584,9 +583,9 @@ Header {
   transition: all 0.2s ease;
   border: none;
   background: none;
- }
- 
- .cta:before {
+}
+
+.cta:before {
   content: "";
   position: absolute;
   top: 0;
@@ -597,20 +596,20 @@ Header {
   width: 45px;
   height: 45px;
   transition: all 0.3s ease;
- }
- .cta div{
-   border-style: none;
-   color: white;
- }
- .cta span {
+}
+.cta div {
+  border-style: none;
+  color: white;
+}
+.cta span {
   position: relative;
   font-size: 100%;
   font-weight: 500;
   letter-spacing: 0.05em;
   color: white;
- }
- 
- .cta div {
+}
+
+.cta div {
   position: relative;
   top: 0;
   margin-left: 10px;
@@ -621,17 +620,145 @@ Header {
   stroke-width: 2;
   transform: translateX(-5px);
   transition: all 0.3s ease;
- }
- 
- .cta:hover:before {
+}
+
+.cta:hover:before {
   width: 100%;
   background: teal;
- }
- 
- .cta:hover div {
+}
+
+.cta:hover div {
   transform: translateX(0);
- }
- 
- .cta:active {
+}
+
+.cta:active {
   transform: scale(0.95);
- }
+}
+
+/* loader */
+/* From cssbuttons.io by @satyamchaudharydev */
+.loader {
+  --loader: rgb(0, 87, 82);
+  --loader-size: 30px;
+  position: relative;
+  width: 100px;
+  height: 40px;
+  overflow: hidden;
+  transition: 0.5s;
+  letter-spacing: 2px;
+}
+
+.loader span {
+  position: absolute;
+}
+
+.loader span:nth-child(1) {
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: var(--loader-size);
+  background: linear-gradient(90deg, transparent, var(--loader));
+  animation: loader-anim1 1s linear infinite;
+}
+
+@keyframes loader-anim1 {
+  0% {
+    left: -100%;
+  }
+
+  50%,
+  100% {
+    left: 100%;
+  }
+}
+
+.loader span:nth-child(2) {
+  top: -100%;
+  right: 0;
+  width: var(--loader-size);
+  height: 100%;
+  background: linear-gradient(180deg, transparent, var(--loader));
+  animation: loader-anim2 1s linear infinite;
+  animation-delay: 0.25s;
+}
+
+@keyframes loader-anim2 {
+  0% {
+    top: -100%;
+  }
+
+  50%,
+  100% {
+    top: 100%;
+  }
+}
+
+.loader span:nth-child(3) {
+  bottom: 0;
+  right: -100%;
+  width: 100%;
+  height: var(--loader-size);
+  background: linear-gradient(270deg, transparent, var(--loader));
+  animation: loader-anim3 1s linear infinite;
+  animation-delay: 0.5s;
+}
+
+@keyframes loader-anim3 {
+  0% {
+    right: -100%;
+  }
+
+  50%,
+  100% {
+    right: 100%;
+  }
+}
+
+.loader span:nth-child(4) {
+  bottom: -100%;
+  left: 0;
+  width: var(--loader-size);
+  height: 100%;
+  background: linear-gradient(360deg, transparent, var(--loader));
+  animation: loader-anim4 1s linear infinite;
+  animation-delay: 0.75s;
+}
+
+@keyframes loader-anim4 {
+  0% {
+    bottom: -100%;
+  }
+
+  50%,
+  100% {
+    bottom: 100%;
+  }
+}
+
+/* ///////////////////////////////////////// */
+
+/* From cssbuttons.io by @adamgiebl */
+.unfollow-confirm-button {
+  color: red;
+  padding: 0.7em 1.7em;
+  font-size: 18px;
+  border-radius: 0.5em;
+  background: #e8e8e8;
+  border: 1px solid #e8e8e8;
+  transition: all 0.3s;
+  box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff;
+}
+
+.unfollow-confirm-button:hover {
+  border: 1px solid white;
+}
+
+.unfollow-confirm-button:active {
+  box-shadow: 4px 4px 12px #c5c5c5, -4px -4px 12px #ffffff;
+}
+.unfollow-modal{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
