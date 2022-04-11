@@ -84,7 +84,7 @@ function Post(props) {
     );
     console.log(data._id);
     const resp = await res.json();
-    //console.log(resp);
+    console.log(resp);
   };
   const handleDownvote = async () => {
     if (localLiked === 0) {

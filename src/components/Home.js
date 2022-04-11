@@ -25,7 +25,8 @@ import Paper from "@mui/material/Paper";
 import FileUpload from "react-mui-fileuploader";
 import Navbar from './Navbar';
 import { storage } from "./Firebase/firebase";
-import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import { ref, getDownloadURL, uploadBytesResumable,uploadBytes } from "firebase/storage";
+import {v4} from "uuid";
 
 const style = {
   position: "absolute",
@@ -48,6 +49,7 @@ function Home() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [convertedText, setConvertedText] = useState("");
+  const [url, setUrl] = useState(null);
   const [cookies, setCookie] = useCookies();
   const [filestemp, setFilesTemp] = useState(null);
   const navigate = useNavigate();
@@ -126,6 +128,80 @@ function Home() {
   const postSubmit = async (e) => {
     setOpen(false);
     e.preventDefault();
+    if (!filestemp) return;
+    const file=filestemp[0];
+    console.log(file);
+
+    const filename = file.name;
+
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function() {
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", file, true);
+      xhr.send(null);
+    });
+    // const ref = firebase
+    //   .storage()
+    //   .ref()
+    //   .child(filename);
+      
+    // const task = ref.put(blob, { contentType: `${file.contentType}`});
+
+    // task.on('state_changed', 
+    //   (snapshot) => {
+    //     console.log(snapshot.totalBytes)
+    //   }, 
+    //   (err) => {
+    //     console.log(err)
+    //   }, 
+    //   () => {
+    //     task.snapshot.ref.getDownloadURL().then((downloadURL) => {
+    //       console.log(downloadURL);
+    //   });
+    // })
+    const metadata = {
+      contentType: `${file.contentType}`
+    };
+    const sotrageRef = ref(storage, `files/${filename}`);
+    
+    // uploadBytes(sotrageRef, blob,metadata)
+    //   .then(() => {
+    //     getDownloadURL(sotrageRef)
+    //       .then((url) => {
+    //         setUrl(url);
+    //         console.log(url);
+    //       })
+    //       .catch((error) => {
+    //         console.log(error.message, "error getting the file url");
+    //       });
+    //     //setImage(null);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error.message);
+    //   });
+
+    const uploadTask = uploadBytesResumable(sotrageRef,file,metadata);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const prog = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(prog);
+      },
+      (error) => console.log(error),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+        });
+      }
+    );
     const res = await fetch("https://dry-crag-93232.herokuapp.com/createpost", {
       method: "POST",
       headers: {
@@ -142,27 +218,7 @@ function Home() {
     const data = await res.json();
     console.log(data);
     //const files = JSON.parse(localStorage.getItem("files"));
-    console.log(filestemp);
-    if (!filestemp) return;
-    const file=filestemp[0];
-    const sotrageRef = ref(storage, `files/${file.name}`);
-    const uploadTask = uploadBytesResumable(sotrageRef, file);
-
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const prog = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgress(prog);
-      },
-      (error) => console.log(error),
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("File available at", downloadURL);
-        });
-      }
-    );
+    
   };
   return (
     <div className="App">
@@ -272,8 +328,6 @@ function Home() {
                   leftLabel="or"
                   rightLabel="to select files"
                   buttonLabel="click here"
-                  maxFileSize={20}
-                  maxUploadFiles={0}
                   maxFilesContainerHeight={357}
                   errorSizeMessage={
                     "fill it or move it to use the default error message"
