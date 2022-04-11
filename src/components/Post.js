@@ -123,6 +123,7 @@ function Post(props) {
   return (
     <ThemeProvider theme={theme}>
       <div className="post">
+      <div className="post-top">
         <div className="post-side-bar">
           <div className="upvote-button">
             <div onClick={handleUpvote}>
@@ -243,13 +244,15 @@ function Post(props) {
             </Typography>
           </div>
 
+        </div>
+        </div>
+
           {commentsOpen ? (
             <div className="post-footer">
               <Divider color="#000000" flexItem />
               <Comments id={data._id} comm={data.comments} />
             </div>
           ) : null}
-        </div>
       </div>
     </ThemeProvider>
   );

@@ -22,8 +22,10 @@ body {
   top: 0;
   z-index: 100;
   border-radius: 40px 40px 40px 40px;
-  background: #e0e0e0;
-  box-shadow: -20px 10px 60px #bebebe, 20px -20px 60px #ffffff;
+  background-color: #e0e0e0;
+  box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
+  inset 4px 4px 8px rgba(209, 217, 230, 0.2),
+  inset -8px -8px 8px rgba(255, 255, 255, 0.2);
   /* margin-top: 1vh; */
   width: 98%;
   min-height: 8vh;
@@ -97,22 +99,30 @@ Header {
 .post {
   display: flex;
   width: 70%;
+  flex-direction: column;
   margin-left: auto;
   margin-right: auto;
-  min-height: 45vh;
-  height: fit-content;
-  background-color: #2c3333;
+  background-color: #e0e0e0;
+  box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
+  inset 4px 4px 8px rgba(209, 217, 230, 0.2),
+  inset -8px -8px 8px rgba(255, 255, 255, 0.2);
   margin-bottom: 5vh;
   border-radius: 5px;
   /* border-bottom: 6px #006064 solid; */
-  color: white;
+  color: #727272;
+}
+
+.post-top {
+  min-height: 45vh;
+  height: fit-content;
+  display: flex;
 }
 .post-side-bar {
   width: 6%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  max-height: 38vh;
+  /* max-height: 38vh; */
 }
 .post-main {
   width: 94%;
@@ -455,7 +465,7 @@ Header {
 }
 
 #scroll::-webkit-scrollbar-thumb {
-  background-color: #640c00;
+  background-color: teal;
 }
 
 @media screen and (max-width: 900px) {
@@ -537,17 +547,9 @@ Header {
 
 .upvote-icon {
   background-color: #006064;
+  color: white;
 }
 .loader-wrapper {
-  /* position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  top: 0;
-  height: 100vh;
-  width: 100vw; */
-  /* background-color: #140f57;
-  opacity: 50%; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -555,25 +557,22 @@ Header {
   height: 100%;
   position: relative;
 }
-
+.news-card{
+  background-color: #e0e0e0;
+  box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
+  inset 4px 4px 8px rgba(209, 217, 230, 0.2),
+  inset -8px -8px 8px rgba(255, 255, 255, 0.2);
+  max-width: 18vw;
+}
 .news-card-wrapper {
-  /* margin-right: 1vw; */
-  padding: 3%;
+  padding: 5%;
   max-width: 18vw;
   min-height: fit-content;
   align-items: center;
-  /* background: linear-gradient(-45deg, rgba(0,0,0,0.22), rgba(255,255,255,0.25));
-  box-shadow: 12px 12px 16px 0 rgba(0, 0, 0, 0.25),
-   -8px -8px 12px 0 rgba(255, 255, 255, 0.3);
-  border-radius: 50px;
-  background: #e0e0e0; */
-  /* padding-top: 4vh;
-  padding-bottom: 2vh; */
-  /* border-radius: 10px; */
-  /* background: linear-gradient(225deg, #cacaca, #f0f0f0);
-  box-shadow: -20px 20px 60px #bebebe, 20px -20px 60px #ffffff; */
 }
-/* From cssbuttons.io by @alexmaracinaru */
+.cardContent{
+  margin: 5%;
+}
 .cta {
   background-color: black;
   margin-left: auto;
@@ -756,7 +755,7 @@ Header {
 .unfollow-confirm-button:active {
   box-shadow: 4px 4px 12px #c5c5c5, -4px -4px 12px #ffffff;
 }
-.unfollow-modal{
+.unfollow-modal {
   display: flex;
   justify-content: center;
   align-items: center;

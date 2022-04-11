@@ -136,7 +136,7 @@ function UserProfile() {
   return (
     <div>
       <div className="header">
-        <Header />
+        <Header  profilePage={true}/>
       </div>
       <div className="userprofile-main">
         <Box sx={{ width: "100%", bgcolor: "#006064" }}>

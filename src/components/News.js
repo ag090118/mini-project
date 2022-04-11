@@ -6,6 +6,9 @@ import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import Skeleton from "@mui/material/Skeleton";
+import Image from "mui-image";
+
+
 function NewsPreLoader() {
   return (
     <div className="news-card-wrapper">
@@ -87,38 +90,65 @@ function News() {
           <div
             key={uuidv4()}
             style={{
-              paddingBottom: "5%",
+              paddingBottom: "2%",
             }}
           >
             <div className="news-card-wrapper">
-              {/* <Typography gutterBottom variant="subtitle2" component="div">
-                {post.title}
-              </Typography>
-              <Typography
-                sx={{
-                  display: "-webkit-box",
-                  overflow: "hidden",
-                  WebkitBoxOrient: "vertical",
-                  WebkitLineClamp: 3,
-                }}
-                variant="body"
-                color="text.secondary"
+              {/* <Card
+                sx={{ maxWidth: "18vw" }}
+                raised={true}
+                className="news-card"
               >
-                {post.description}
-              </Typography>
-              <Button href={post.link} size="small" color="primary">
-                View
-              </Button> */}
-               <Card sx={{ maxWidth: "18vw"}} raised={true}>
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image={post.image_url ? post.image_url : img}
-                  alt="not found"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="subtitle2" component="div">
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={post.image_url ? post.image_url : img}
+                    alt="not found"
+                  />
+                  <CardContent>
+                    <Typography
+                      gutterBottom
+                      variant="subtitle2"
+                      component="div"
+                    >
+                      {post.title}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        display: "-webkit-box",
+                        overflow: "hidden",
+                        WebkitBoxOrient: "vertical",
+                        WebkitLineClamp: 3,
+                      }}
+                      variant="body"
+                      color="text.secondary"
+                    >
+                      {post.description}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+                <CardActions>
+                  <Button href={post.link} size="small" color="primary">
+                    View
+                  </Button>
+                </CardActions>
+              </Card> */}
+              <div className="news-card">
+                {post.image_url ? (
+                  <Image src={post.image_url} duration={325} />
+                ) : (
+                  <Image src={img} duration={325} />
+                )}
+                <div className="cardContent">
+                  <Typography
+                    sx={{
+                      fontSize: "90%",
+                    }}
+                    gutterBottom
+                    variant="subtitle2"
+                    component="div"
+                  >
                     {post.title}
                   </Typography>
                   <Typography
@@ -127,20 +157,18 @@ function News() {
                       overflow: "hidden",
                       WebkitBoxOrient: "vertical",
                       WebkitLineClamp: 3,
+                      fontSize: "80%",
                     }}
                     variant="body"
                     color="text.secondary"
                   >
                     {post.description}
                   </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions>
+                </div>
                 <Button href={post.link} size="small" color="primary">
                   View
                 </Button>
-              </CardActions>
-            </Card> 
+              </div>
             </div>
           </div>
         ))

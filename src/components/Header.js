@@ -21,10 +21,13 @@ import Button from "@mui/material/Button";
 import store from "./store";
 import { useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
+import Image from "mui-image";
 
-
-const LOGO = <Link to="/">
-<img className="logo" src="../logo.png" alt="logo" /></Link>;
+const LOGO = (
+  <Link to="/">
+    <img className="logo" src="../logo.png" alt="logo" />
+  </Link>
+);
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -66,6 +69,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar(props) {
+  const { profilePage } = props;
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [isUserSignedIn, setIsUserSignedIn] = useState(false);
@@ -91,10 +95,10 @@ export default function PrimarySearchAppBar(props) {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-  const handlelogout = async() => {
-    removeCookie('jwtoken');
-    removeCookie('userid');
-    removeCookie('username');
+  const handlelogout = async () => {
+    removeCookie("jwtoken");
+    removeCookie("userid");
+    removeCookie("username");
   };
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -180,22 +184,23 @@ export default function PrimarySearchAppBar(props) {
         position="static"
       >
         <Toolbar>
-          <Typography
+          {/* <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
+            sx={{ display: { xs: "none", sm: "block", height:"10vh", width:"10vh" } }}
           >
             {LOGO}
-          </Typography>
+          </Typography> */}
+          <Link to="/">
+            <Image src="../logofull.png" duration={325} height="8vh"/>
+          </Link>
           <Box sx={{ flexGrow: 1 }} />
-          <Button
-            onClick={props.handleOpen}
-            variant="contained"
-            size="large"
-          >
-            Post
-          </Button>
+          {profilePage ? null : (
+            <Button onClick={props.handleOpen} variant="contained" size="large">
+              Post
+            </Button>
+          )}
           <Search sx={{ color: "#000000" }} className="searchbar">
             <SearchIconWrapper>
               <SearchIcon />
@@ -216,39 +221,46 @@ export default function PrimarySearchAppBar(props) {
               </Badge>
             </IconButton>
 
-              <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                color="inherit"
-              >
-              {!cookies.jwtoken && 
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              color="inherit"
+            >
+              {!cookies.jwtoken && (
                 <Button component={Link} to={"/login"} size="large">
                   Log in/up
                 </Button>
-              }
-              {cookies.jwtoken && 
-                <Button component={Link} to={`/userprofile/${cookies.userid}`} size="large">
+              )}
+              {cookies.jwtoken && (
+                <Button
+                  component={Link}
+                  to={`/userprofile/${cookies.userid}`}
+                  size="large"
+                >
                   {cookies.username}
                 </Button>
-              }
-              </IconButton>
-              <IconButton
+              )}
+            </IconButton>
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              color="inherit"
+            >
+              <Button
+                component={Link}
+                to={"/login"}
                 size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                color="inherit"
+                onClick={handlelogout}
               >
-              <Button component={Link} to={"/login"} size="large" onClick={handlelogout}>
-                  Logout
+                Logout
               </Button>
-              </IconButton>
-              
-            
+            </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton

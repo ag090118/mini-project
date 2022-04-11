@@ -12,7 +12,7 @@ function Main() {
   return (
     <div>
       <div className="main-navbar">
-        <Box sx={{ borderRadius: "5px", bgcolor: "#2C3333", color: "white"}}>
+        <Box className="malware-types" sx={{ borderRadius: "5px", bgcolor: "teal", color: "white"}}>
           <Tabs
             value={value}
             onChange={handleChange}
