@@ -105,7 +105,7 @@ function UserProfile() {
   };
   const renderComponent = () => {
     if (value == 0) {
-      return <PersonalInfo data={userinfo} isLoading={isLoading} />;
+      return <PersonalInfo data={userinfo} isLoading={isLoading} routeUserId={id}/>;
     } else if (value == 1) {
       return <PersonalPosts id={id} routeUserId={id}/>;
     } else {
@@ -139,7 +139,7 @@ function UserProfile() {
         <Header  profilePage={true}/>
       </div>
       <div className="userprofile-main">
-        <Box sx={{ width: "100%", bgcolor: "#006064" }}>
+        <Box sx={{ width: "100%", bgcolor: "#e0e0e0" }}>
           <StyledTabs
             value={value}
             onChange={handleChange}

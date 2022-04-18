@@ -96,9 +96,9 @@ export default function PrimarySearchAppBar(props) {
     setMobileMoreAnchorEl(event.currentTarget);
   };
   const handlelogout = async () => {
-    removeCookie("jwtoken");
-    removeCookie("userid");
-    removeCookie("username");
+    removeCookie('jwtoken', { path: '/' });
+    removeCookie('userid', { path: '/' });
+    removeCookie('username', { path: '/' });
   };
   const menuId = "primary-search-account-menu";
   const renderMenu = (

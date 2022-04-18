@@ -12,6 +12,8 @@ import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
 import { RiUserFollowLine } from "react-icons/ri";
 import { RiUserFollowFill } from "react-icons/ri";
+import {useCookies} from "react-cookie";
+import { useParams } from "react-router-dom";
 
 let theme = createTheme();
 theme = responsiveFontSizes(theme);
@@ -55,10 +57,13 @@ const style2 = {
   overflow: "scroll",
 };
 function PersonalInfo(props) {
-  const { data, isLoading } = props;
-  // console.log(data);
+  const { data, isLoading ,routeUserId} = props;
+  //console.log(data);
   // console.log(isLoading);
   const [follow, setFollow] = useState(false);
+  const [cookies, setCookie] = useCookies();
+  console.log(routeUserId);
+  console.log(cookies.userid);
   const [open1, setOpen1] = React.useState(false);
   const handleOpen1 = () => {
     setOpen1(true);
@@ -81,50 +86,46 @@ function PersonalInfo(props) {
     setOpen3(false);
   };
   const [image, setImage] = useState(null);
+  const [followerData, setFollowerData] = React.useState();
 
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       setImage(URL.createObjectURL(event.target.files[0]));
     }
   };
-  function handleFollow() {
+  const fecthData = async() => {
+    const res = await fetch(`https://dry-crag-93232.herokuapp.com/${routeUserId}/follow`, {
+      method: "PATCH",
+      headers: {
+        "Authorization" : cookies.jwtoken
+      },
+    });
+    const resp= await res.json();
+    // const obj= resp.find(data => data.username===cookies.username);
+    // console.log(obj);
+    console.log(resp);
+  };
+  const handleFollow = async() => {
+
+    fecthData();
     if(follow){
+      setFollowerData();
       handleOpen3();
     }
     else{
+      setFollowerData(cookies.username);
       setFollow(true);
     }
-  }
+  };
   function handleUnfollowConfirm(){
+    fecthData();
     setFollow(false);
     handleClose3();
   }
-  const [followdata, setData] = React.useState([
-    "Smitesh",
-    "Aryan",
-    "Mehul",
-    "Ankit",
-    "Shreyas",
-    "Arpit",
-    "Smitesh",
-    "Aryan",
-    "Mehul",
-    "Ankit",
-    "Shreyas",
-    "Arpit",
-    "Smitesh",
-    "Aryan",
-    "Mehul",
-    "Ankit",
-    "Shreyas",
-    "Arpit",
-    "Smitesh",
-    "Aryan",
-    "Mehul",
-    "Ankit",
-    "Shreyas",
-    "Arpit",
-  ]);
+  
+  // useEffect(() => {
+    
+  // }, []);
   return (
     <div className="user-profile-wrap">
       <ThemeProvider theme={theme}>
@@ -141,10 +142,14 @@ function PersonalInfo(props) {
             />
           </div>
           <div class="profile-name">
+          {isLoading || cookies.userid===routeUserId ? (
+              null
+            ) : (
             <button onClick={handleFollow} class="cta">
               {follow ? <span>Following</span> : <span>Follow</span>}
               <div>{follow ? <RiUserFollowFill /> : <RiUserFollowLine />}</div>
             </button>
+            )}
             <Modal
               open={open3}
               onClose={handleClose3}
@@ -257,8 +262,19 @@ function PersonalInfo(props) {
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
             >
+            {isLoading ? (
+                    <Skeleton />
+                  ) : (
               <Box sx={style1} id="scroll">
-                {followdata.map((item) => {
+              { followerData && <Typography
+                      id="modal-modal-title"
+                      variant="h6"
+                      component="h2"
+                    >
+                      {followerData}
+                    </Typography>
+              }
+                {data.followers.map((item) => {
                   return (
                     <Typography
                       id="modal-modal-title"
@@ -270,6 +286,7 @@ function PersonalInfo(props) {
                   );
                 })}
               </Box>
+                  )}
             </Modal>
             <div onClick={handleOpen2} className="followers2">
               {isLoading ? (
@@ -303,8 +320,11 @@ function PersonalInfo(props) {
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
             >
+            {isLoading ? (
+                    <Skeleton />
+                  ) : (
               <Box sx={style2} id="scroll">
-                {followdata.map((item) => {
+                {data.following.map((item) => {
                   return (
                     <Typography
                       id="modal-modal-title"
@@ -316,6 +336,7 @@ function PersonalInfo(props) {
                   );
                 })}
               </Box>
+               )}
             </Modal>
           </div>
         </div>

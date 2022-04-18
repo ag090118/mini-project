@@ -125,68 +125,20 @@ function Home() {
   }, []);
 
   const [progress, setProgress] = useState(0);
-  const postSubmit = async (e) => {
-    setOpen(false);
+
+  const formHandler = (e) => {
     e.preventDefault();
-    if (!filestemp) return;
-    const file=filestemp[0];
+    const file = e.target[0].files[0];
+    uploadFiles(file);
+  };
+
+  const uploadFiles = (file) => {
+    //
+    if (!file) return;
     console.log(file);
+    const sotrageRef = ref(storage, `files/${file.name}`);
+    const uploadTask = uploadBytesResumable(sotrageRef, file);
 
-    const filename = file.name;
-
-    const blob = await new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = function() {
-        resolve(xhr.response);
-      };
-      xhr.onerror = function() {
-        reject(new TypeError("Network request failed"));
-      };
-      xhr.responseType = "blob";
-      xhr.open("GET", file, true);
-      xhr.send(null);
-    });
-    // const ref = firebase
-    //   .storage()
-    //   .ref()
-    //   .child(filename);
-      
-    // const task = ref.put(blob, { contentType: `${file.contentType}`});
-
-    // task.on('state_changed', 
-    //   (snapshot) => {
-    //     console.log(snapshot.totalBytes)
-    //   }, 
-    //   (err) => {
-    //     console.log(err)
-    //   }, 
-    //   () => {
-    //     task.snapshot.ref.getDownloadURL().then((downloadURL) => {
-    //       console.log(downloadURL);
-    //   });
-    // })
-    const metadata = {
-      contentType: `${file.contentType}`
-    };
-    const sotrageRef = ref(storage, `files/${filename}`);
-    
-    // uploadBytes(sotrageRef, blob,metadata)
-    //   .then(() => {
-    //     getDownloadURL(sotrageRef)
-    //       .then((url) => {
-    //         setUrl(url);
-    //         console.log(url);
-    //       })
-    //       .catch((error) => {
-    //         console.log(error.message, "error getting the file url");
-    //       });
-    //     //setImage(null);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error.message);
-    //   });
-
-    const uploadTask = uploadBytesResumable(sotrageRef,file,metadata);
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -202,6 +154,11 @@ function Home() {
         });
       }
     );
+  };
+  const postSubmit = async (e) => {
+    setOpen(false);
+    e.preventDefault();
+
     const res = await fetch("https://dry-crag-93232.herokuapp.com/createpost", {
       method: "POST",
       headers: {
@@ -319,8 +276,8 @@ function Home() {
 
             {/* <Data convertedText={convertedText} /> */}
             {postType === "Project" ? (
-              <div className="postform-fileupload">
-                <FileUpload
+               <div className="postform-fileupload">
+               {/* <FileUpload
                   multiFile={true}
                   disabled={false}
                   title="Attach Project"
@@ -340,6 +297,12 @@ function Home() {
                   containerProps={{ elevation: 0, variant: "outlined" }}
                 />
                 <br></br>
+                <h2>Uploading done {progress}%</h2> */}
+                <form onSubmit={formHandler}>
+                  <input type="file" className="input" />
+                  <button type="submit">Upload</button>
+                </form>
+                <hr />
                 <h2>Uploading done {progress}%</h2>
               </div>
             ) : null}
