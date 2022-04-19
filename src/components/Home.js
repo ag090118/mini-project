@@ -23,10 +23,17 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { v4 as uuidv4 } from "uuid";
 import Paper from "@mui/material/Paper";
 import FileUpload from "react-mui-fileuploader";
-import Navbar from './Navbar';
+import Navbar from "./Navbar";
 import { storage } from "./Firebase/firebase";
-import { ref, getDownloadURL, uploadBytesResumable,uploadBytes } from "firebase/storage";
-import {v4} from "uuid";
+import { ImFolderUpload } from "react-icons/im";
+import {
+  ref,
+  getDownloadURL,
+  uploadBytesResumable,
+  uploadBytes,
+} from "firebase/storage";
+import LinearProgress from "@mui/material/LinearProgress";
+import { v4 } from "uuid";
 
 const style = {
   position: "absolute",
@@ -156,6 +163,7 @@ function Home() {
     );
   };
   const postSubmit = async (e) => {
+    console.log(filestemp);
     setOpen(false);
     e.preventDefault();
 
@@ -163,7 +171,7 @@ function Home() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization" : cookies.jwtoken
+        Authorization: cookies.jwtoken,
       },
       body: JSON.stringify({
         title: title,
@@ -175,11 +183,10 @@ function Home() {
     const data = await res.json();
     console.log(data);
     //const files = JSON.parse(localStorage.getItem("files"));
-    
   };
   return (
     <div className="App">
-    {/* <Navbar/> */}
+      {/* <Navbar/> */}
       <div className="postform-wrapper">
         <Modal
           keepMounted
@@ -276,8 +283,8 @@ function Home() {
 
             {/* <Data convertedText={convertedText} /> */}
             {postType === "Project" ? (
-               <div className="postform-fileupload">
-               {/* <FileUpload
+              <div className="postform-fileupload">
+                {/* <FileUpload
                   multiFile={true}
                   disabled={false}
                   title="Attach Project"
@@ -295,15 +302,23 @@ function Home() {
                   // imageSrc={"path/to/custom/image"}
                   bannerProps={{ elevation: 0, variant: "outlined" }}
                   containerProps={{ elevation: 0, variant: "outlined" }}
-                />
+                /> */}
                 <br></br>
-                <h2>Uploading done {progress}%</h2> */}
                 <form onSubmit={formHandler}>
                   <input type="file" className="input" />
-                  <button type="submit">Upload</button>
+                  <Button
+                    type="submit"
+                    endIcon={<ImFolderUpload />}
+                    variant="contained"
+                  >
+                    Upload
+                  </Button>
+                  {/* <button type="submit">Upload</button> */}
                 </form>
+                <br></br>
                 <hr />
-                <h2>Uploading done {progress}%</h2>
+                <LinearProgress variant="determinate" value={progress} />
+                {/* <h2>Uploading done {progress}%</h2> */}
               </div>
             ) : null}
 
