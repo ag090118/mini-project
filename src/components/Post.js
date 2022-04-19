@@ -123,136 +123,163 @@ function Post(props) {
   return (
     <ThemeProvider theme={theme}>
       <div className="post">
-      <div className="post-top">
-        <div className="post-side-bar">
-          <div className="upvote-button">
-            <div onClick={handleUpvote}>
-              {(localLiked === 0 || localLiked === 2) && <FaChevronUp />}
-              {localLiked === 1 && <FaChevronUp className="upvote-icon" />}
-            </div>
-
-            <div className="upvote-wrapper">
-              <Typography variant="body1" align="center">
-                {upvotes}
-              </Typography>
-              <Divider
-                style={{
-                  marginBottom: "1%",
-                  background: "#000000",
-                  width: "70%",
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                }}
-              />
-              <Typography variant="body1" align="center">
-                {downvotes}
-              </Typography>
-            </div>
-
-            <div onClick={handleDownvote}>
-              {(localLiked === 0 || localLiked === 1) && <FaChevronDown />}
-              {localLiked === 2 && <FaChevronDown className="upvote-icon" />}
-            </div>
-          </div>
-          <div className="comment-button">
-            <div>
-              <RiBookmarkLine
-                onClick={handleCommentChange}
-                className="comment-icon"
-              />
-            </div>
-            <div>
-              <MdOutlineModeComment
-                onClick={handleCommentChange}
-                className="comment-icon"
-              />
-            </div>
-          </div>
-        </div>
-        <Divider color="#000000" orientation="vertical" flexItem />
-        <div className="post-main">
-          <Paper
-            sx={{
-              width: "100%",
-            }}
-            variant="elevation"
-            elevation={2}
-          >
-            <div className="post-header">
-              <div className="post-title-main">
-                <Link
-                  style={{ textDecoration: "none", color: "white" }}
-                  to={`/userprofile/${data.authorid}`}
-                  underline="none"
-                  variant="h1"
-                >
-                  {data.authorname}
-                </Link>
-                <p style={{ marginRight: "2%" }}>{data.time}</p>
+        <div className="post-top">
+          <div className="post-side-bar">
+            <div className="upvote-button">
+              <div onClick={handleUpvote}>
+                {(localLiked === 0 || localLiked === 2) && <FaChevronUp />}
+                {localLiked === 1 && <FaChevronUp className="upvote-icon" />}
               </div>
 
-              {profile ? (
-                <div className="post-menuButton">
-                  <Button
-                    id="basic-button"
-                    aria-controls={open ? "basic-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? "true" : undefined}
-                    onClick={handleClick}
-                    disableRipple={true}
-                    endIcon={<GoKebabVertical />}
-                    style={{
-                      padding: "0",
-                      margin: "0",
-                      width: "fit-content",
-                      color: "white",
-                    }}
-                    variant="text"
-                  ></Button>
-                  <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-                      "aria-labelledby": "basic-button",
-                    }}
-                    anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
-                  >
-                    <MenuItem onClick={handleDeleteButton}> Delete</MenuItem>
-                    <MenuItem onClick={handleEdit}> Edit</MenuItem>
-                  </Menu>
-                </div>
-              ) : null}
-            </div>
+              <div className="upvote-wrapper">
+                <Typography variant="body1" align="center">
+                  {upvotes}
+                </Typography>
+                <Divider
+                  style={{
+                    marginBottom: "1%",
+                    background: "#000000",
+                    width: "70%",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                  }}
+                />
+                <Typography variant="body1" align="center">
+                  {downvotes}
+                </Typography>
+              </div>
 
-            <div className="post-title">
-              <h2 style={{ marginLeft: "2%" }}>{data.title}</h2>
+              <div onClick={handleDownvote}>
+                {(localLiked === 0 || localLiked === 1) && <FaChevronDown />}
+                {localLiked === 2 && <FaChevronDown className="upvote-icon" />}
+              </div>
             </div>
-          </Paper>
-          <div className="post-main-content">
-            <Typography
-              component={"span"}
-              sx={{
-                padding: "3%",
-              }}
-              align="left"
-              variant="body2"
-            >
-              {/* {data.description} */}
-              <Data convertedText={data.description} />
-            </Typography>
+            <div className="comment-button">
+              <div>
+                <RiBookmarkLine
+                  onClick={handleCommentChange}
+                  className="comment-icon"
+                />
+              </div>
+              <div>
+                <MdOutlineModeComment
+                  onClick={handleCommentChange}
+                  className="comment-icon"
+                />
+              </div>
+            </div>
           </div>
+          <Divider color="#000000" orientation="vertical" flexItem />
+          <div className="post-main">
+            <Paper
+              sx={{
+                width: "100%",
+              }}
+              variant="elevation"
+              elevation={2}
+            >
+              <div className="post-header">
+                <div className="post-title-main">
+                  <Link
+                    style={{ textDecoration: "none", color: "white" }}
+                    to={`/userprofile/${data.authorid}`}
+                    underline="none"
+                    variant="h1"
+                  >
+                    {data.authorname}
+                  </Link>
+                  <p style={{ marginRight: "2%" }}>{data.time}</p>
+                </div>
 
-        </div>
-        </div>
+                {profile ? (
+                  <div className="post-menuButton">
+                    <Button
+                      id="basic-button"
+                      aria-controls={open ? "basic-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? "true" : undefined}
+                      onClick={handleClick}
+                      disableRipple={true}
+                      endIcon={<GoKebabVertical />}
+                      style={{
+                        padding: "0",
+                        margin: "0",
+                        width: "fit-content",
+                        color: "white",
+                      }}
+                      variant="text"
+                    ></Button>
+                    <Menu
+                      id="basic-menu"
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handleClose}
+                      MenuListProps={{
+                        "aria-labelledby": "basic-button",
+                      }}
+                      anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
+                    >
+                      <MenuItem onClick={handleDeleteButton}> Delete</MenuItem>
+                      <MenuItem onClick={handleEdit}> Edit</MenuItem>
+                    </Menu>
+                  </div>
+                ) : null}
+              </div>
 
-          {commentsOpen ? (
-            <div className="post-footer">
-              <Divider color="#000000" flexItem />
-              <Comments id={data._id} comm={data.comments} />
+              <div className="post-title">
+                <h2 style={{ marginLeft: "2%" }}>{data.title}</h2>
+              </div>
+            </Paper>
+            <div className="post-main-content">
+              <div className="collab-wrapper">
+                <div className="collab-empty"></div>
+                <Button
+                  size="small"
+                  className="post-collab"
+                  disableRipple={true}
+                  variant="text"
+                  sx={{
+                    color: "teal",
+                  }}
+                >
+                  <Typography
+                    component={"span"}
+                    sx={{
+                      fontSize: "80%",
+                      ml: "auto",
+                    }}
+                    align="center"
+                  >
+                    Collaborate
+                  </Typography>
+                </Button>
+              </div>
+              <div className="post-desc-wrapper">
+              <Typography
+                component={"span"}
+                sx={{
+                  fontSize: "100%",
+                }}
+                align="left"
+                variant="body2"
+              >
+                {/* {data.description} */}
+                <Data convertedText={data.description} />
+              </Typography>
+              </div>
+              {/* box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
+  inset 4px 4px 8px rgba(209, 217, 230, 0.2),
+  inset -8px -8px 8px rgba(255, 255, 255, 0.2); */}
             </div>
-          ) : null}
+          </div>
+        </div>
+
+        {commentsOpen ? (
+          <div className="post-footer">
+            <Divider color="#000000" flexItem />
+            <Comments id={data._id} comm={data.comments} />
+          </div>
+        ) : null}
       </div>
     </ThemeProvider>
   );

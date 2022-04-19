@@ -24,8 +24,8 @@ body {
   border-radius: 40px 40px 40px 40px;
   background-color: #e0e0e0;
   box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
-  inset 4px 4px 8px rgba(209, 217, 230, 0.2),
-  inset -8px -8px 8px rgba(255, 255, 255, 0.2);
+    inset 4px 4px 8px rgba(209, 217, 230, 0.2),
+    inset -8px -8px 8px rgba(255, 255, 255, 0.2);
   /* margin-top: 1vh; */
   width: 98%;
   min-height: 8vh;
@@ -58,7 +58,24 @@ body {
   background-color: transparent;
   width: 70%;
 }
-
+.post-collab {
+  box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
+    inset 4px 4px 8px rgba(209, 217, 230, 0.2),
+    inset -8px -8px 8px rgba(255, 255, 255, 0.2);
+}
+.collab-wrapper{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  PADDING: 2%;
+}
+.collab-empty{
+  width: 1px;
+}
+.post-desc-wrapper{
+  width: 100%;
+  padding: 2%;
+}
 element::-webkit-scrollbar {
   display: none; /* for Chrome, Safari, and Opera */
 }
@@ -104,8 +121,8 @@ Header {
   margin-right: auto;
   background-color: #e0e0e0;
   box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
-  inset 4px 4px 8px rgba(209, 217, 230, 0.2),
-  inset -8px -8px 8px rgba(255, 255, 255, 0.2);
+    inset 4px 4px 8px rgba(209, 217, 230, 0.2),
+    inset -8px -8px 8px rgba(255, 255, 255, 0.2);
   margin-bottom: 5vh;
   border-radius: 5px;
   /* border-bottom: 6px #006064 solid; */
@@ -557,11 +574,11 @@ Header {
   height: 100%;
   position: relative;
 }
-.news-card{
+.news-card {
   background-color: #e0e0e0;
   box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
-  inset 4px 4px 8px rgba(209, 217, 230, 0.2),
-  inset -8px -8px 8px rgba(255, 255, 255, 0.2);
+    inset 4px 4px 8px rgba(209, 217, 230, 0.2),
+    inset -8px -8px 8px rgba(255, 255, 255, 0.2);
   max-width: 18vw;
 }
 .news-card-wrapper {
@@ -570,7 +587,7 @@ Header {
   min-height: fit-content;
   align-items: center;
 }
-.cardContent{
+.cardContent {
   margin: 5%;
 }
 .cta {

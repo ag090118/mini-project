@@ -51,6 +51,7 @@ const style = {
 
 function Home() {
   const name = useSelector((state) => state.checkUserLogin.userName);
+  const [forReRender,setForReRender]=useState(false);
   const [postType, setPostType] = React.useState("Discussion");
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -181,7 +182,7 @@ function Home() {
       }),
     });
     const data = await res.json();
-    console.log(data);
+    setForReRender((prev) => !prev);
     //const files = JSON.parse(localStorage.getItem("files"));
   };
   return (
@@ -361,7 +362,7 @@ function Home() {
       </div>
       <div className="center">
         <div className="main">
-          <Main />
+          <Main forReRender={forReRender}/>
         </div>
         <div className="side" id="scroll">
           <News />
