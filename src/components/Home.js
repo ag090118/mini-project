@@ -160,6 +160,7 @@ function Home() {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
+          localStorage.setItem('download',downloadURL)
           setDownload(downloadURL);
         });
       }
