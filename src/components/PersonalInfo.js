@@ -149,7 +149,8 @@ function PersonalInfo(props) {
           {isLoading ? (
               null
             ) : ( <div>
-            {console.log(follow)}
+            { cookies.userid===routeUserId ? null :
+            <div>
             { localStorage.getItem('isfollow')==='true' ? (<button onClick={handleUnFollow} class="cta">
                       <span>Following</span>
                     <div><RiUserFollowFill /></div>
@@ -159,6 +160,8 @@ function PersonalInfo(props) {
                       <span>Follow</span>
                     <div><RiUserFollowLine /></div>
                   </button>)
+            }
+            </div>
             }
             </div>
             )}

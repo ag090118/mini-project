@@ -60,6 +60,7 @@ function Home() {
   const [url, setUrl] = useState(null);
   const [cookies, setCookie] = useCookies();
   const [filestemp, setFilesTemp] = useState(null);
+  const [download, setDownload] = useState(null);
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [chipData, setChipData] = React.useState([
@@ -159,12 +160,13 @@ function Home() {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
+          setDownload(downloadURL);
         });
       }
     );
   };
   const postSubmit = async (e) => {
-    console.log(filestemp);
+    //console.log(filestemp);
     setOpen(false);
     e.preventDefault();
 
@@ -179,10 +181,12 @@ function Home() {
         description: convertedText,
         tags: chipDataPre,
         postadmins: collaborators,
+        filelink: download
       }),
     });
     const data = await res.json();
     setForReRender((prev) => !prev);
+    window.location.reload()
     //const files = JSON.parse(localStorage.getItem("files"));
   };
   return (

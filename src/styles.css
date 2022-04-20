@@ -441,7 +441,16 @@ Header {
   display: flex;
   height: 100%;
 }
-.postform-tagchips {
+.postform-tagchips {;
+  margin-top: 2%;
+  height: 20%;
+}
+.tagchips-inside-wrapper-post {
+  display: flex;
+  height: 100%;
+}
+
+.postform-tagchips-post {
   margin-top: 2%;
   height: 20%;
 }
