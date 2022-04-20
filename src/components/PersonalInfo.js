@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import {
@@ -60,10 +60,12 @@ function PersonalInfo(props) {
   const { data, isLoading ,routeUserId} = props;
   //console.log(data);
   // console.log(isLoading);
-  const [follow, setFollow] = useState(false);
+  //console.log(localStorage.getItem('isfollow'));
+  const [follow, setFollow] = useState(localStorage.getItem('isfollow'));
+  //console.log(follow);
   const [cookies, setCookie] = useCookies();
-  console.log(routeUserId);
-  console.log(cookies.userid);
+  //console.log(routeUserId);
+  //console.log(cookies.userid);
   const [open1, setOpen1] = React.useState(false);
   const handleOpen1 = () => {
     setOpen1(true);
@@ -86,7 +88,7 @@ function PersonalInfo(props) {
     setOpen3(false);
   };
   const [image, setImage] = useState(null);
-  const [followerData, setFollowerData] = React.useState();
+  const [followerData, setFollowerData] = React.useState(null);
 
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -101,31 +103,31 @@ function PersonalInfo(props) {
       },
     });
     const resp= await res.json();
-    // const obj= resp.find(data => data.username===cookies.username);
-    // console.log(obj);
     console.log(resp);
   };
   const handleFollow = async() => {
-
+    console.log(follow)
     fecthData();
-    if(follow){
-      setFollowerData();
-      handleOpen3();
-    }
-    else{
-      setFollowerData(cookies.username);
-      setFollow(true);
-    }
+    setFollowerData(cookies.username);
+    setFollow('true');
+    localStorage.setItem('isfollow','true');
+  };
+  const handleUnFollow = async() => {
+    //console.log(follow)
+    handleOpen3();
   };
   function handleUnfollowConfirm(){
+    setFollowerData(null);
     fecthData();
-    setFollow(false);
+    setFollow('false');
+    localStorage.setItem('isfollow','false');
     handleClose3();
+    
   }
   
-  // useEffect(() => {
-    
-  // }, []);
+  useEffect(() => {
+    setFollow(localStorage.getItem('isfollow'));
+  }, []);
   return (
     <div className="user-profile-wrap">
       <ThemeProvider theme={theme}>
@@ -142,13 +144,21 @@ function PersonalInfo(props) {
             />
           </div>
           <div class="profile-name">
-          {isLoading || cookies.userid===routeUserId ? (
+          {isLoading ? (
               null
-            ) : (
-            <button onClick={handleFollow} class="cta">
-              {follow ? <span>Following</span> : <span>Follow</span>}
-              <div>{follow ? <RiUserFollowFill /> : <RiUserFollowLine />}</div>
-            </button>
+            ) : ( <div>
+            {console.log(follow)}
+            { localStorage.getItem('isfollow')==='true' ? (<button onClick={handleUnFollow} class="cta">
+                      <span>Following</span>
+                    <div><RiUserFollowFill /></div>
+                  </button>)
+                  :
+                  (<button onClick={handleFollow} class="cta">
+                      <span>Follow</span>
+                    <div><RiUserFollowLine /></div>
+                  </button>)
+            }
+            </div>
             )}
             <Modal
               open={open3}
@@ -281,7 +291,7 @@ function PersonalInfo(props) {
                       variant="h6"
                       component="h2"
                     >
-                      {item}
+                      {item.username}
                     </Typography>
                   );
                 })}
@@ -331,7 +341,7 @@ function PersonalInfo(props) {
                       variant="h6"
                       component="h2"
                     >
-                      {item}
+                      {item.username}
                     </Typography>
                   );
                 })}

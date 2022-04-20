@@ -99,6 +99,7 @@ function UserProfile() {
   const [cookies, setCookie] = useCookies();
   const [isLoading, setLoading] = useState(true);
   const [userinfo, setUserinfo] = useState();
+  const [isfollow, setIsFollow] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -125,6 +126,15 @@ function UserProfile() {
       .then((resp) => {
         setUserinfo(resp);
         //console.log(userinfo)
+        console.log(resp);
+        localStorage.setItem('isfollow','false');
+        resp.followers.map((item) => {
+          // console.log(item.username);
+          // console.log(cookies.username);
+          if(item.username==cookies.username){
+            localStorage.setItem('isfollow','true');
+          }
+        })
         setLoading(false);
       });
   };
