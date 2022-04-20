@@ -269,6 +269,9 @@ function Post(props) {
                 {/* {data.description} */}
                 <Data convertedText={data.description} />
               </Typography>
+              {
+                data.filelink && <Button variant="contained" onClick={routeChange}>Show File</Button>
+              }
               </div>
               {/* box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
   inset 4px 4px 8px rgba(209, 217, 230, 0.2),
