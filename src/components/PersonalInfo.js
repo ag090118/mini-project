@@ -89,6 +89,7 @@ function PersonalInfo(props) {
   };
   const [image, setImage] = useState(null);
   const [followerData, setFollowerData] = React.useState(null);
+  const [plus, setPlus] = React.useState(0);
 
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -111,6 +112,7 @@ function PersonalInfo(props) {
     setFollowerData(cookies.username);
     setFollow('true');
     localStorage.setItem('isfollow','true');
+    setPlus(1);
   };
   const handleUnFollow = async() => {
     //console.log(follow)
@@ -122,7 +124,7 @@ function PersonalInfo(props) {
     setFollow('false');
     localStorage.setItem('isfollow','false');
     handleClose3();
-    
+    setPlus(-1);
   }
   
   useEffect(() => {
@@ -252,7 +254,7 @@ function PersonalInfo(props) {
                   }}
                   align="center"
                 >
-                  {data.followers.length}
+                  {data.followers.length+plus}
                 </Typography>
               )}
               <Typography
