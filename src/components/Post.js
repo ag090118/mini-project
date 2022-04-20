@@ -14,8 +14,6 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { GoKebabVertical } from "react-icons/go";
-import Chip from "@mui/material/Chip";
-import { styled } from "@mui/material/styles";
 import { MdDelete } from "react-icons/md";
 import {
   createTheme,
@@ -26,11 +24,6 @@ import { useCookies } from "react-cookie";
 
 let theme = createTheme();
 theme = responsiveFontSizes(theme);
-
-const ListItem = styled("li")(({ theme }) => ({
-  margin: theme.spacing(0.5),
-}));
-
 function Post(props) {
   const { liked, profile, data, isMenuButtons, handleOpen, handleDelete } =
     props;
@@ -117,13 +110,10 @@ function Post(props) {
     const resp = await res.json();
     console.log(resp);
   };
-  const routeChange = () =>{ 
-    window.open(download, "_blank")
-  }
   useEffect(() => {
     const up = data.upvotes;
     const down = data.downvotes;
-    console.log(data);
+    //console.log(data);
     if (up.find((element) => element === cookies.userid)) {
       setLocalLiked(1);
     } else if (down.find((element) => element === cookies.userid)) {
@@ -276,9 +266,6 @@ function Post(props) {
                 {/* {data.description} */}
                 <Data convertedText={data.description} />
               </Typography>
-              {
-                data.filelink && <Button variant="contained" onClick={routeChange}>Show File</Button>
-              }
               </div>
               {/* box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
   inset 4px 4px 8px rgba(209, 217, 230, 0.2),
@@ -286,37 +273,7 @@ function Post(props) {
             </div>
           </div>
         </div>
-        <div className="postform-tagchips-post">
-        <div className="tagchips-inside-wrapper-post">
-        <Chip label="Post Tags" color="primary" />
-          <Paper
-        id="scroll"
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          listStyle: "none",
-          p: 0.5,
-          m: 0,
-          width: "50%",
-          minHeight: "fit-content",
-          height: "100%",
-          overflow: "auto",
-        }}
-        component="ul"
-      >
-        {data.tags.map((dat) => {
-          return (
-            <ListItem key={dat.key}>
-              <Chip
-                size="small"
-                label={dat.label}
-              />
-            </ListItem>
-          );
-        })}
-      </Paper>
-      </div>
-      </div>
+
         {commentsOpen ? (
           <div className="post-footer">
             <Divider color="#000000" flexItem />
