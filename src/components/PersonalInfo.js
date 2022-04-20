@@ -112,7 +112,7 @@ function PersonalInfo(props) {
     setFollowerData(cookies.username);
     setFollow('true');
     localStorage.setItem('isfollow','true');
-    setPlus(1);
+    setPlus((prev)=>(prev+1));
   };
   const handleUnFollow = async() => {
     //console.log(follow)
@@ -124,7 +124,7 @@ function PersonalInfo(props) {
     setFollow('false');
     localStorage.setItem('isfollow','false');
     handleClose3();
-    setPlus(-1);
+    setPlus((prev)=>(prev-1));
   }
   
   useEffect(() => {
