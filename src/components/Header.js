@@ -96,9 +96,9 @@ export default function PrimarySearchAppBar(props) {
     setMobileMoreAnchorEl(event.currentTarget);
   };
   const handlelogout = async () => {
-    removeCookie('jwtoken', { path: '/' });
-    removeCookie('userid', { path: '/' });
-    removeCookie('username', { path: '/' });
+    removeCookie("jwtoken", { path: "/" });
+    removeCookie("userid", { path: "/" });
+    removeCookie("username", { path: "/" });
   };
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -193,11 +193,16 @@ export default function PrimarySearchAppBar(props) {
             {LOGO}
           </Typography> */}
           <Link to="/">
-            <Image src="../logofull.png" duration={325} height="8vh"/>
+            <Image src="../logofull.png" duration={325} height="8vh" />
           </Link>
           <Box sx={{ flexGrow: 1 }} />
           {profilePage ? null : (
-            <Button onClick={props.handleOpen} variant="contained" size="large">
+            <Button
+              disableRipple={true}
+              onClick={props.handleOpen}
+              variant="contained"
+              size="large"
+            >
               Post
             </Button>
           )}
@@ -236,6 +241,7 @@ export default function PrimarySearchAppBar(props) {
               )}
               {cookies.jwtoken && (
                 <Button
+                  disableRipple={true}
                   component={Link}
                   to={`/userprofile/${cookies.userid}`}
                   size="large"
@@ -253,6 +259,7 @@ export default function PrimarySearchAppBar(props) {
               color="inherit"
             >
               <Button
+                disableRipple={true}
                 component={Link}
                 to={"/login"}
                 size="large"
