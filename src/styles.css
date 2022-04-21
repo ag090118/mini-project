@@ -67,7 +67,7 @@ body {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  PADDING: 2%;
+  padding: 2%;
 }
 .collab-empty{
   width: 1px;

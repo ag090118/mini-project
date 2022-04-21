@@ -110,9 +110,9 @@ function Post(props) {
     const resp = await res.json();
     console.log(resp);
   };
-  const routeChange = () =>{ 
-    window.open(data.filelink, "_blank")
-  }
+  const routeChange = () => {
+    window.open(data.filelink, "_blank");
+  };
   useEffect(() => {
     const up = data.upvotes;
     const down = data.downvotes;
@@ -235,7 +235,23 @@ function Post(props) {
             </Paper>
             <div className="post-main-content">
               <div className="collab-wrapper">
-                <div className="collab-empty"></div>
+              <div>
+                {data.tags.map((tag) => (
+                  <Typography
+                    component={"span"}
+                    sx={{
+                      fontSize: "70%",
+                      marginRight:"3%",
+                      color:"#b7b8b9"
+                    }}
+                    align="left"
+                    variant="subtitle1"
+                  >
+                    #{tag.label}
+                  </Typography>
+                ))}
+                </div>
+                {/* <div className="collab-empty"></div> */}
                 <Button
                   size="small"
                   className="post-collab"
@@ -258,20 +274,21 @@ function Post(props) {
                 </Button>
               </div>
               <div className="post-desc-wrapper">
-              <Typography
-                component={"span"}
-                sx={{
-                  fontSize: "100%",
-                }}
-                align="left"
-                variant="body2"
-              >
-                {/* {data.description} */}
-                <Data convertedText={data.description} />
-              </Typography>
-              {
-                data.filelink && <Button variant="contained" onClick={routeChange}>Show File</Button>
-              }
+                <Typography
+                  component={"span"}
+                  sx={{
+                    fontSize: "100%",
+                  }}
+                  align="left"
+                  variant="body2"
+                >
+                  <Data convertedText={data.description} />
+                </Typography>
+                {data.filelink && (
+                  <Button variant="contained" onClick={routeChange}>
+                    Show File
+                  </Button>
+                )}
               </div>
               {/* box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
   inset 4px 4px 8px rgba(209, 217, 230, 0.2),
