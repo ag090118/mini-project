@@ -111,7 +111,7 @@ function Post(props) {
     console.log(resp);
   };
   const routeChange = () =>{ 
-    window.open(localStorage.getItem('download'), "_blank")
+    window.open(data.filelink, "_blank")
   }
   useEffect(() => {
     const up = data.upvotes;

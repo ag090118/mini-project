@@ -160,7 +160,6 @@ function Home() {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
           localStorage.setItem('download',downloadURL)
-          setDownload(downloadURL);
         });
       }
     );
@@ -181,6 +180,7 @@ function Home() {
         description: convertedText,
         tags: chipDataPre,
         postadmins: collaborators,
+        filelink: localStorage.getItem('download')
       }),
     });
     const data = await res.json();
