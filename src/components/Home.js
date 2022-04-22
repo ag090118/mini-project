@@ -51,7 +51,7 @@ const style = {
 
 function Home() {
   const name = useSelector((state) => state.checkUserLogin.userName);
-  const [forReRender,setForReRender]=useState(false);
+  const [forReRender, setForReRender] = useState(false);
   const [postType, setPostType] = React.useState("Discussion");
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -159,7 +159,7 @@ function Home() {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
-          localStorage.setItem('download',downloadURL)
+          localStorage.setItem("download", downloadURL);
         });
       }
     );
@@ -180,7 +180,7 @@ function Home() {
         description: convertedText,
         tags: chipDataPre,
         postadmins: collaborators,
-        filelink: localStorage.getItem('download')
+        filelink: localStorage.getItem("download"),
       }),
     });
     const data = await res.json();
@@ -365,7 +365,7 @@ function Home() {
       </div>
       <div className="center">
         <div className="main">
-          <Main forReRender={forReRender}/>
+          <Main forReRender={forReRender} />
         </div>
         <div className="side" id="scroll">
           <News />
