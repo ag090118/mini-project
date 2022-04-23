@@ -15,6 +15,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { GoKebabVertical } from "react-icons/go";
 import { MdDelete } from "react-icons/md";
+import { MdFilePresent } from "react-icons/md";
 import {
   createTheme,
   responsiveFontSizes,
@@ -235,21 +236,21 @@ function Post(props) {
             </Paper>
             <div className="post-main-content">
               <div className="collab-wrapper">
-              <div>
-                {data.tags.map((tag) => (
-                  <Typography
-                    component={"span"}
-                    sx={{
-                      fontSize: "70%",
-                      marginRight:"3%",
-                      color:"#b7b8b9"
-                    }}
-                    align="left"
-                    variant="subtitle1"
-                  >
-                    #{tag.label}
-                  </Typography>
-                ))}
+                <div>
+                  {data.tags.map((tag) => (
+                    <Typography
+                      component={"span"}
+                      sx={{
+                        fontSize: "70%",
+                        marginRight: "3%",
+                        color: "#b7b8b9",
+                      }}
+                      align="left"
+                      variant="subtitle1"
+                    >
+                      #{tag.label}
+                    </Typography>
+                  ))}
                 </div>
                 {/* <div className="collab-empty"></div> */}
                 <Button
@@ -274,21 +275,45 @@ function Post(props) {
                 </Button>
               </div>
               <div className="post-desc-wrapper">
-                <Typography
-                  component={"span"}
-                  sx={{
-                    fontSize: "100%",
-                  }}
-                  align="left"
-                  variant="body2"
-                >
-                  <Data convertedText={data.description} />
-                </Typography>
-                {data.filelink && (
-                  <Button variant="contained" onClick={routeChange}>
-                    Show File
-                  </Button>
-                )}
+                <div>
+                  <Typography
+                    component={"span"}
+                    sx={{
+                      fontSize: "100%",
+                    }}
+                    align="left"
+                    variant="body2"
+                  >
+                    <Data convertedText={data.description} />
+                  </Typography>
+                </div>
+                <br/><br/>
+                <div className="post-attachment">
+                  {data.filelink && (
+                    <Button
+                      size="large"
+                      className="post-collab"
+                      disableRipple={true}
+                      variant="text"
+                      sx={{
+                        color: "teal",
+                      }}
+                      onClick={routeChange}
+                    >
+                      <MdFilePresent />
+                      <Typography
+                        component={"span"}
+                        sx={{
+                          fontSize: "80%",
+                          ml: "auto",
+                        }}
+                        align="center"
+                      >
+                        Attachments
+                      </Typography>
+                    </Button>
+                  )}
+                </div>
               </div>
               {/* box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
   inset 4px 4px 8px rgba(209, 217, 230, 0.2),
