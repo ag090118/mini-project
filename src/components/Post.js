@@ -161,7 +161,6 @@ function Post(props) {
       }),
     });
     const data = await res.json();
-    setForReRender((prev) => !prev);
     window.location.reload();
     //const files = JSON.parse(localStorage.getItem("files"));
   };
