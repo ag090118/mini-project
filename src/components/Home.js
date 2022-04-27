@@ -288,25 +288,6 @@ function Home() {
             {/* <Data convertedText={convertedText} /> */}
             {postType === "Project" ? (
               <div className="postform-fileupload">
-                {/* <FileUpload
-                  multiFile={true}
-                  disabled={false}
-                  title="Attach Project"
-                  header="[Drag to drop]"
-                  leftLabel="or"
-                  rightLabel="to select files"
-                  buttonLabel="click here"
-                  maxFilesContainerHeight={357}
-                  errorSizeMessage={
-                    "fill it or move it to use the default error message"
-                  }
-                  allowedExtensions={["jpg", "jpeg", "pdf", "zip"]}
-                  onFilesChange={handleFilesChange}
-                  onError={handleFileUploadError}
-                  // imageSrc={"path/to/custom/image"}
-                  bannerProps={{ elevation: 0, variant: "outlined" }}
-                  containerProps={{ elevation: 0, variant: "outlined" }}
-                /> */}
                 <br></br>
                 <form onSubmit={formHandler}>
                   <input type="file" className="input" />
