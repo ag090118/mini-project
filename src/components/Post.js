@@ -39,6 +39,7 @@ theme = responsiveFontSizes(theme);
 function Post(props) {
   const { liked, profile, data, isMenuButtons, handleOpen, handleDelete } =
     props;
+  //console.log(data);
   const [cookies, setCookie] = useCookies({});
   const [convertedText, setConvertedText] = useState("");
   const [commentsOpen, setCommentsOpen] = useState(false);
@@ -97,7 +98,6 @@ function Post(props) {
         },
       }
     );
-    console.log(data._id);
     const resp = await res.json();
     console.log(resp);
   };
@@ -128,18 +128,8 @@ function Post(props) {
   const routeChange = () => {
     window.open(data.filelink, "_blank");
   };
-  useEffect(() => {
-    const up = data.upvotes;
-    const down = data.downvotes;
-    //console.log(data);
-    if (up.find((element) => element === cookies.userid)) {
-      setLocalLiked(1);
-    } else if (down.find((element) => element === cookies.userid)) {
-      setLocalLiked(2);
-    }
-  }, []);
   function handleCollab() {
-    setCollabForm(true);
+    setCollabForm((prev)=> (!prev));
   }
   const formHandler = (e) => {
     e.preventDefault();
@@ -148,9 +138,8 @@ function Post(props) {
   };
   const postSubmit = async (e) => {
     e.preventDefault();
-
-    const res = await fetch("https://dry-crag-93232.herokuapp.com/createpost", {
-      method: "POST",
+    const res = await fetch(`https://dry-crag-93232.herokuapp.com/${data._id}/unacceptpost`, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Authorization: cookies.jwtoken,
@@ -160,9 +149,11 @@ function Post(props) {
         filelink: localStorage.getItem("download"),
       }),
     });
-    const data = await res.json();
-    window.location.reload();
-    //const files = JSON.parse(localStorage.getItem("files"));
+    const respon = await res.json();
+    console.log(respon);
+    setConvertedText(null);
+    setCollabForm(false);
+    localStorage.removeItem("download");
   };
   const uploadFiles = (file) => {
     //
@@ -188,6 +179,16 @@ function Post(props) {
       }
     );
   };
+  useEffect(() => {
+    const up = data.upvotes;
+    const down = data.downvotes;
+    //console.log(data);
+    if (up.find((element) => element === cookies.userid)) {
+      setLocalLiked(1);
+    } else if (down.find((element) => element === cookies.userid)) {
+      setLocalLiked(2);
+    }
+  }, []);
   return (
     <ThemeProvider theme={theme}>
       <div className="post">

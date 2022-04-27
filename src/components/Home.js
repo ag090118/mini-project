@@ -186,6 +186,9 @@ function Home() {
     const data = await res.json();
     setForReRender((prev) => !prev);
     window.location.reload();
+    
+    setConvertedText(null);
+    localStorage.removeItem("download");
     //const files = JSON.parse(localStorage.getItem("files"));
   };
   return (
