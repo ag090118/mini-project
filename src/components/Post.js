@@ -16,6 +16,17 @@ import MenuItem from "@mui/material/MenuItem";
 import { GoKebabVertical } from "react-icons/go";
 import { MdDelete } from "react-icons/md";
 import { MdFilePresent } from "react-icons/md";
+import ReactQuill from "react-quill";
+import { ImFolderUpload } from "react-icons/im";
+import LinearProgress from "@mui/material/LinearProgress";
+import { IoSend } from "react-icons/io5";
+import { storage } from "./Firebase/firebase";
+import {
+  ref,
+  getDownloadURL,
+  uploadBytesResumable,
+  uploadBytes,
+} from "firebase/storage";
 import {
   createTheme,
   responsiveFontSizes,
@@ -29,11 +40,14 @@ function Post(props) {
   const { liked, profile, data, isMenuButtons, handleOpen, handleDelete } =
     props;
   const [cookies, setCookie] = useCookies({});
+  const [convertedText, setConvertedText] = useState("");
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [upvotes, setUpvotes] = useState(data.upvotes.length);
   const [downvotes, setDownvotes] = useState(data.downvotes.length);
   const [localLiked, setLocalLiked] = useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [collabForm, setCollabForm] = useState(false);
+  const [progress, setProgress] = useState(0);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -124,6 +138,57 @@ function Post(props) {
       setLocalLiked(2);
     }
   }, []);
+  function handleCollab() {
+    setCollabForm(true);
+  }
+  const formHandler = (e) => {
+    e.preventDefault();
+    const file = e.target[0].files[0];
+    uploadFiles(file);
+  };
+  const postSubmit = async (e) => {
+    e.preventDefault();
+
+    const res = await fetch("https://dry-crag-93232.herokuapp.com/createpost", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: cookies.jwtoken,
+      },
+      body: JSON.stringify({
+        description: convertedText,
+        filelink: localStorage.getItem("download"),
+      }),
+    });
+    const data = await res.json();
+    setForReRender((prev) => !prev);
+    window.location.reload();
+    //const files = JSON.parse(localStorage.getItem("files"));
+  };
+  const uploadFiles = (file) => {
+    //
+    if (!file) return;
+    console.log(file);
+    const sotrageRef = ref(storage, `files/${file.name}`);
+    const uploadTask = uploadBytesResumable(sotrageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const prog = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(prog);
+      },
+      (error) => console.log(error),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+          localStorage.setItem("download", downloadURL);
+        });
+      }
+    );
+  };
   return (
     <ThemeProvider theme={theme}>
       <div className="post">
@@ -261,6 +326,7 @@ function Post(props) {
                   sx={{
                     color: "teal",
                   }}
+                  onClick={handleCollab}
                 >
                   <Typography
                     component={"span"}
@@ -274,6 +340,62 @@ function Post(props) {
                   </Typography>
                 </Button>
               </div>
+              {collabForm && (
+                <div>
+                  <ReactQuill
+                    modules={{
+                      toolbar: [
+                        [{ header: "1" }, { header: "2" }, { font: [] }],
+                        [{ size: [] }],
+                        ["bold", "italic", "underline", "strike", "blockquote"],
+                        [
+                          { list: "ordered" },
+                          { list: "bullet" },
+                          { indent: "-1" },
+                          { indent: "+1" },
+                        ],
+                        ["link", "image", "video"],
+                        ["clean"],
+                      ],
+                      clipboard: {
+                        matchVisual: false,
+                      },
+                    }}
+                    theme="snow"
+                    value={convertedText}
+                    onChange={setConvertedText}
+                    style={{ minHeight: "60px" }}
+                  />
+                  <div className="postform-fileupload">
+                  <br></br>
+                  <form onSubmit={formHandler}>
+                    <input type="file" className="input" />
+                    <Button
+                      type="submit"
+                      endIcon={<ImFolderUpload />}
+                      variant="contained"
+                    >
+                      Upload
+                    </Button>
+                    {/* <button type="submit">Upload</button> */}
+                  </form>
+                  <br></br>
+                  <hr />
+                  <LinearProgress variant="determinate" value={progress} />
+                  {/* <h2>Uploading done {progress}%</h2> */}
+                </div>
+                <div className="postform-postbutton">
+                  <Button
+                    onClick={postSubmit}
+                    size="large"
+                    endIcon={<IoSend />}
+                    variant="contained"
+                  >
+                    request collaboration
+                  </Button>
+                </div>
+                </div>
+                )}
               <div className="post-desc-wrapper">
                 <div>
                   <Typography
@@ -287,7 +409,8 @@ function Post(props) {
                     <Data convertedText={data.description} />
                   </Typography>
                 </div>
-                <br/><br/>
+                <br />
+                <br />
                 <div className="post-attachment">
                   {data.filelink && (
                     <Button
@@ -314,6 +437,7 @@ function Post(props) {
                     </Button>
                   )}
                 </div>
+                <br/>
               </div>
               {/* box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
   inset 4px 4px 8px rgba(209, 217, 230, 0.2),
