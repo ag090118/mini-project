@@ -110,7 +110,7 @@ function UserProfile() {
     } else if (value == 1) {
       return <PersonalPosts id={id} routeUserId={id}/>;
     } else {
-      return <PersonalRequests />;
+      return <PersonalRequests routeUserId={id}/>;
     }
   };
   const checkRender = async () => {
