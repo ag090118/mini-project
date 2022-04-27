@@ -22,6 +22,7 @@ import store from "./store";
 import { useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
 import Image from "mui-image";
+import { useNavigate } from "react-router-dom";
 
 const LOGO = (
   <Link to="/">
@@ -76,6 +77,7 @@ export default function PrimarySearchAppBar(props) {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [cookies, setCookie, removeCookie] = useCookies();
+  const navigate = useNavigate();
   // cookies.jwtoken
   // cookies.username
 
@@ -173,7 +175,10 @@ export default function PrimarySearchAppBar(props) {
       </MenuItem>
     </Menu>
   );
-
+  const handleButton  = () => {
+    navigate(`/userprofile/${cookies.userid}`);
+    window.location.reload();
+  }
   const user = useSelector((state) => state.checkUserLogin);
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -242,8 +247,7 @@ export default function PrimarySearchAppBar(props) {
               {cookies.jwtoken && (
                 <Button
                   disableRipple={true}
-                  component={Link}
-                  to={`/userprofile/${cookies.userid}`}
+                  onClick={handleButton}
                   size="large"
                 >
                   {cookies.username}
