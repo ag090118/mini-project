@@ -23,7 +23,7 @@ import { v4 as uuidv4 } from "uuid";
 import Paper from "@mui/material/Paper";
 import FileUpload from "react-mui-fileuploader";
 import Skeleton from "@mui/material/Skeleton";
-import Loader from './Loader';
+import Loader from "./Loader";
 
 const style = {
   position: "absolute",
@@ -58,12 +58,12 @@ function PersonalPosts(props) {
       {
         method: "DELETE",
         headers: {
-          "Authorization": cookies.jwtoken,
+          Authorization: cookies.jwtoken,
         },
       }
     );
     setLoading(true);
-    const message= res.json();
+    const message = res.json();
     console.log(message);
     getPersonalPosts();
   };
@@ -74,7 +74,7 @@ function PersonalPosts(props) {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": cookies.jwtoken,
+          Authorization: cookies.jwtoken,
         },
         body: JSON.stringify({
           title: title,
@@ -362,30 +362,19 @@ function PersonalPosts(props) {
       </Modal>
       {isLoading ? (
         //<Skeleton />
-        <Loader/>
+        <Loader />
       ) : (
-        /* allPosts.map((data) => {
-          {
-            console.log(data);
-          }
+        allPosts.map((dataChild) => (
           <Post
             handleOpen={handleOpen}
-            key={data._id}
-            type={true}
-            data={data}
-            isLoading={isLoading}
-            isMenuButtons={true}
-          />;
-        }) */
-        allPosts.map((dataChild) => (
-        <Post handleOpen={handleOpen}
-        handleDelete={handleDeletePost}
+            handleDelete={handleDeletePost}
             key={dataChild._id}
             profile={true}
             data={dataChild}
             isLoading={isLoading}
-            isMenuButtons={true}/>
-      ))
+            isMenuButtons={true}
+          />
+        ))
       )}
     </div>
   );

@@ -12,6 +12,8 @@ import { useCookies } from "react-cookie";
 import parse from "html-react-parser";
 import Button from "@mui/material/Button";
 import { MdFilePresent } from "react-icons/md";
+import { MdOutlineDoneOutline } from "react-icons/md";
+import { ImCross } from "react-icons/im";
 
 const options = {
   replace: (domNode) => {
@@ -158,16 +160,18 @@ function PersonalRequests(props) {
                             </Button>
                           )}
                         </div>
-                        <IconButton
-                          onClick={() => handleReject(data._id, note._id)}
-                        >
-                          <CloseIcon sx={{ color: pink[500] }} />
-                        </IconButton>
-                        <IconButton
-                          onClick={() => handleAccept(data._id, note._id)}
-                        >
-                          <DoneIcon color="success" />
-                        </IconButton>
+                        <div className="personalreq-buttons">
+                          <div>
+                            <ImCross
+                              onClick={() => handleReject(data._id, note._id)}
+                            />
+                          </div>
+                          <div>
+                            <MdOutlineDoneOutline
+                              onClick={() => handleAccept(data._id, note._id)}
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   );
