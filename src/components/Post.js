@@ -49,6 +49,7 @@ function Post(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [collabForm, setCollabForm] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [collabPostNo,setCollabPostNo]=useState(-1);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -439,9 +440,9 @@ function Post(props) {
                 </div>
                 <br/>
               </div>
-              {/* box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
-  inset 4px 4px 8px rgba(209, 217, 230, 0.2),
-  inset -8px -8px 8px rgba(255, 255, 255, 0.2); */}
+              for (var i=0; i < 5; i++) {
+        <p>hi</p>
+    } 
             </div>
           </div>
         </div>
