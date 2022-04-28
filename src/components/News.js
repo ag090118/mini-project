@@ -94,46 +94,6 @@ function News() {
             }}
           >
             <div className="news-card-wrapper">
-              {/* <Card
-                sx={{ maxWidth: "18vw" }}
-                raised={true}
-                className="news-card"
-              >
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image={post.image_url ? post.image_url : img}
-                    alt="not found"
-                  />
-                  <CardContent>
-                    <Typography
-                      gutterBottom
-                      variant="subtitle2"
-                      component="div"
-                    >
-                      {post.title}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        display: "-webkit-box",
-                        overflow: "hidden",
-                        WebkitBoxOrient: "vertical",
-                        WebkitLineClamp: 3,
-                      }}
-                      variant="body"
-                      color="text.secondary"
-                    >
-                      {post.description}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-                <CardActions>
-                  <Button href={post.link} size="small" color="primary">
-                    View
-                  </Button>
-                </CardActions>
-              </Card> */}
               <div className="news-card">
                 {post.image_url ? (
                   <Image src={post.image_url} duration={325} />

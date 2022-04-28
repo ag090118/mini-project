@@ -800,3 +800,17 @@ Header {
   justify-content: center;
   align-items: center;
 }
+#scroll > div > div > div > div > div{
+  width: 100%;
+  margin-bottom: 3%;
+}
+
+.personal-requests{
+  margin: 3%;
+  width: 100%;
+  padding: 2%;
+  background-color: #e0e0e0;
+  box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
+    inset 4px 4px 8px rgba(209, 217, 230, 0.2),
+    inset -8px -8px 8px rgba(255, 255, 255, 0.2);
+}

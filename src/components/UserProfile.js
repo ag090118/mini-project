@@ -109,7 +109,7 @@ function UserProfile() {
       return <PersonalInfo data={userinfo} isLoading={isLoading} routeUserId={id}/>;
     } else if (value == 1) {
       return <PersonalPosts id={id} routeUserId={id}/>;
-    } else {
+    } else{
       return <PersonalRequests routeUserId={id}/>;
     }
   };

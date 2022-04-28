@@ -115,7 +115,6 @@ function PersonalInfo(props) {
     setPlus((prev)=>(prev+1));
   };
   const handleUnFollow = async() => {
-    //console.log(follow)
     handleOpen3();
   };
   function handleUnfollowConfirm(){
@@ -135,7 +134,6 @@ function PersonalInfo(props) {
       <ThemeProvider theme={theme}>
         <div class="container">
           <div class="cover-photo">
-            {/* <input type="file" onChange={onImageChange} className="filetype" /> */}
             <img
               src={
                 image

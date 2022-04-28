@@ -39,7 +39,7 @@ theme = responsiveFontSizes(theme);
 function Post(props) {
   const { liked, profile, data, isMenuButtons, handleOpen, handleDelete } =
     props;
-  //console.log(data);
+  console.log(data);
   const [cookies, setCookie] = useCookies({});
   const [convertedText, setConvertedText] = useState("");
   const [commentsOpen, setCommentsOpen] = useState(false);
