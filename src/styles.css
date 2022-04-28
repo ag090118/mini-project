@@ -800,10 +800,6 @@ Header {
   justify-content: center;
   align-items: center;
 }
-#scroll > div > div > div > div > div{
-  width: 100%;
-  margin-bottom: 3%;
-}
 
 .personal-requests{
   margin: 3%;
