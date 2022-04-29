@@ -211,7 +211,7 @@ export default function PrimarySearchAppBar(props) {
               Post
             </Button>
           )}
-          <Search sx={{ color: "#000000" }} className="searchbar">
+          {/* <Search sx={{ color: "#000000" }} className="searchbar">
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -219,7 +219,7 @@ export default function PrimarySearchAppBar(props) {
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
             />
-          </Search>
+          </Search> */}
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
               size="large"

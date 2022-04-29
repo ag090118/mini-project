@@ -819,3 +819,47 @@ Header {
 .personal-posts-wrapper{
   margin-top: 1%;
 }
+.tabpanel-div{
+  align-items: center;
+}
+.search-bar{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+/* #root>div>div.center>div.main>div>div.tabpanel-div>div.search-bar>div.navy.georgia.ma0.grow{
+  padding: 3%;
+}
+#root>div>div.center>div.main>div>div.tabpanel-div>div.search-bar>div.pa2{
+  padding: 3%;
+} */
+.searchInputs {
+  padding: 2%;
+  display: flex;
+}
+
+.search input {
+  background-color: white;
+  border-radius: 2px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  font-size: 18px;
+  height: 30px;
+  width: 300px;
+}
+
+.searchIcon {
+  height: 30px;
+  width: 50px;
+  background-color: white;
+  display: grid;
+  place-items: center;
+}
+a:hover {
+  background-color: lightgrey;
+}
+
+#clearBtn {
+  cursor: pointer;
+}
