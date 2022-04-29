@@ -38,7 +38,7 @@ function TabPanel(props) {
     }
   );
   console.log(filteredData);
-  const handleChange = e => {
+  const handleChangeSearch = e => {
     setSearchField(e.target.value);
     //console.log(searchField);
   };
@@ -59,7 +59,7 @@ function TabPanel(props) {
           type="text"
           placeholder="Search"
           value={searchField}
-          onChange={handleChange}
+          onChange={handleChangeSearch}
         />
         <div className="searchIcon">
           {searchField.length === 0 ? (
