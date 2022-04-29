@@ -439,10 +439,7 @@ function Post(props) {
                   )}
                 </div>
                 <br/>
-              </div>
-              for (var i=0; i < 5; i++) {
-        <p>hi</p>
-    } 
+              </div> 
             </div>
           </div>
         </div>

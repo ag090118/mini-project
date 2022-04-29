@@ -24,8 +24,7 @@ function TabPanel(props) {
   }, []);
   return (
     <div>
-      {value === 0 && <MalwareTab index={value} data={postinfo} isLoading={isLoading}/>}
-      {value !== 0 && <MalwareTab index={value} data={postinfo} isLoading={isLoading}/>}
+      <MalwareTab index={value} data={postinfo} isLoading={isLoading}/>
     </div>
   );
 }
