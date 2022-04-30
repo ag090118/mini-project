@@ -21,6 +21,8 @@ import { ImFolderUpload } from "react-icons/im";
 import LinearProgress from "@mui/material/LinearProgress";
 import { IoSend } from "react-icons/io5";
 import { storage } from "./Firebase/firebase";
+import Chip from "@mui/material/Chip";
+import { AiOutlineCaretDown } from "react-icons/ai";
 import {
   ref,
   getDownloadURL,
@@ -49,7 +51,7 @@ function Post(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [collabForm, setCollabForm] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [collabPostNo,setCollabPostNo]=useState(-1);
+  const [collabPostNo, setCollabPostNo] = useState(0);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -130,7 +132,7 @@ function Post(props) {
     window.open(data.filelink, "_blank");
   };
   function handleCollab() {
-    setCollabForm((prev)=> (!prev));
+    setCollabForm((prev) => !prev);
   }
   const formHandler = (e) => {
     e.preventDefault();
@@ -139,17 +141,20 @@ function Post(props) {
   };
   const postSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch(`https://dry-crag-93232.herokuapp.com/${data._id}/unacceptpost`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: cookies.jwtoken,
-      },
-      body: JSON.stringify({
-        description: convertedText,
-        filelink: localStorage.getItem("download"),
-      }),
-    });
+    const res = await fetch(
+      `https://dry-crag-93232.herokuapp.com/${data._id}/unacceptpost`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: cookies.jwtoken,
+        },
+        body: JSON.stringify({
+          description: convertedText,
+          filelink: localStorage.getItem("download"),
+        }),
+      }
+    );
     const respon = await res.json();
     console.log(respon);
     setConvertedText(null);
@@ -368,35 +373,35 @@ function Post(props) {
                     style={{ minHeight: "60px" }}
                   />
                   <div className="postform-fileupload">
-                  <br></br>
-                  <form onSubmit={formHandler}>
-                    <input type="file" className="input" />
+                    <br></br>
+                    <form onSubmit={formHandler}>
+                      <input type="file" className="input" />
+                      <Button
+                        type="submit"
+                        endIcon={<ImFolderUpload />}
+                        variant="contained"
+                      >
+                        Upload
+                      </Button>
+                      {/* <button type="submit">Upload</button> */}
+                    </form>
+                    <br></br>
+                    <hr />
+                    <LinearProgress variant="determinate" value={progress} />
+                    {/* <h2>Uploading done {progress}%</h2> */}
+                  </div>
+                  <div className="postform-postbutton">
                     <Button
-                      type="submit"
-                      endIcon={<ImFolderUpload />}
+                      onClick={postSubmit}
+                      size="large"
+                      endIcon={<IoSend />}
                       variant="contained"
                     >
-                      Upload
+                      request collaboration
                     </Button>
-                    {/* <button type="submit">Upload</button> */}
-                  </form>
-                  <br></br>
-                  <hr />
-                  <LinearProgress variant="determinate" value={progress} />
-                  {/* <h2>Uploading done {progress}%</h2> */}
+                  </div>
                 </div>
-                <div className="postform-postbutton">
-                  <Button
-                    onClick={postSubmit}
-                    size="large"
-                    endIcon={<IoSend />}
-                    variant="contained"
-                  >
-                    request collaboration
-                  </Button>
-                </div>
-                </div>
-                )}
+              )}
               <div className="post-desc-wrapper">
                 <div>
                   <Typography
@@ -438,8 +443,109 @@ function Post(props) {
                     </Button>
                   )}
                 </div>
-                <br/>
+                <br />
               </div>
+              {data.acceptedver
+                .filter((item, idx) => idx < collabPostNo)
+                .map((item, idx) => {
+                  console.log(item, idx);
+                  return (
+                    <div className="post-desc-wrapper">
+                      <Divider>
+                        <Chip label={"Collabortion version "+(idx+1)+"/"+data.acceptedver.length} />
+                      </Divider>
+                      <div>
+                        <Typography
+                          component={"span"}
+                          sx={{
+                            fontSize: "60%",
+                            marginRight:"5%"
+                          }}
+                          align="left"
+                          variant="subtitle1"
+                        >
+                          <Data convertedText={item.nestedauthor} />
+                        </Typography>
+                        <Typography
+                          component={"span"}
+                          sx={{
+                            fontSize: "60%",
+                          }}
+                          align="left"
+                          variant="subtitle1"
+                        >
+                          <Data convertedText={item.nestedtime} />
+                        </Typography>
+                        <br/>
+                        <Typography
+                          component={"span"}
+                          sx={{
+                            fontSize: "100%",
+                          }}
+                          align="left"
+                          variant="body2"
+                        >
+                          <Data convertedText={item.nesteddescription} />
+                        </Typography>
+                      </div>
+                      <br />
+                      <br />
+                      <div className="post-attachment">
+                        {item.nestedfilelink && (
+                          <Button
+                            size="large"
+                            className="post-collab"
+                            disableRipple={true}
+                            variant="text"
+                            sx={{
+                              color: "teal",
+                            }}
+                            onClick={routeChange}
+                          >
+                            <MdFilePresent />
+                            <Typography
+                              component={"span"}
+                              sx={{
+                                fontSize: "80%",
+                                ml: "auto",
+                              }}
+                              align="center"
+                            >
+                              Attachments
+                            </Typography>
+                          </Button>
+                        )}
+                      </div>
+                      <br />
+                    </div>
+                  );
+                })}
+              <Button
+                size="large"
+                className="post-collab"
+                disableRipple={true}
+                variant="text"
+                sx={{
+                  color: "teal",
+                }}
+                onClick={() => {
+                  setCollabPostNo((prev) => prev + 1);
+                }}
+              >
+                <AiOutlineCaretDown />
+                <Typography
+                  component={"span"}
+                  sx={{
+                    fontSize: "80%",
+                    ml: "auto",
+                  }}
+                  align="center"
+                >
+                  View Collaborations
+                </Typography>
+              </Button>
+              <br />
+              <br />
             </div>
           </div>
         </div>
