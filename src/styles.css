@@ -867,4 +867,30 @@ a:hover {
 #clearBtn {
   cursor: pointer;
 }
+.api-total{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.api-main-area{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 80%;
+}
+.form-css-api{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 5%;
+}
+.api-button{
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 5%;
+  padding-bottom: 5%;
+}
 

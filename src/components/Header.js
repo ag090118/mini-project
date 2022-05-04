@@ -226,9 +226,14 @@ export default function PrimarySearchAppBar(props) {
               aria-label="show 17 new notifications"
               color="inherit"
             >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
+              <Button
+                disableRipple={true}
+                component={Link}
+                to={"/malwareapi"}
+                size="large"
+              >
+                Check File
+              </Button>
             </IconButton>
 
             <IconButton

@@ -23,7 +23,7 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { v4 as uuidv4 } from "uuid";
 import Paper from "@mui/material/Paper";
 import FileUpload from "react-mui-fileuploader";
-import Navbar from "./Navbar";
+import Navbar from "./NavBar";
 import { storage } from "./Firebase/firebase";
 import { ImFolderUpload } from "react-icons/im";
 import {

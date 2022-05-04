@@ -4,6 +4,7 @@ import Home from "./components/Home";
 import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
 import UserProfile from "./components/UserProfile";
+import MalwareApi from "./components/MalwareApi";
 import { cyan } from "@mui/material/colors";
 import { grey } from "@mui/material/colors";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -36,6 +37,7 @@ export default function App() {
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signup" element={<SignupForm />} />
           <Route path="/userprofile/:id" element={<UserProfile />} />
+          <Route path="/malwareapi" element={<MalwareApi />} />
         </Routes>
       </ThemeProvider>
     </Router>
