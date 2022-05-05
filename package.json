@@ -1,6 +1,7 @@
 {
   "name": "minifinal",
   "version": "1.0.0",
+  "homepage":"https://fantastic-sfogliatella-36cbe1.netlify.app",
   "description": "",
   "keywords": [],
   "main": "src/index.js",
